@@ -328,5 +328,103 @@
       "docs": "Read the Docs",
       "backToNoex": "Back to noex"
     }
+  },
+  "rulesPage": {
+    "meta": {
+      "title": "noex-rules - Rule Engine with Complex Event Processing",
+      "description": "Forward chaining rule engine with CEP, three DSL flavors, integrated fact store, and production-ready REST API. Built on noex GenServer actors."
+    },
+    "hero": {
+      "headline": "Rule Engine with Complex Event Processing",
+      "subheadline": "Forward chaining engine with temporal pattern detection, three DSL flavors, integrated fact store, and production-ready REST/GraphQL APIs. Built on noex GenServer actors for fault-tolerant rule processing.",
+      "install": "npm install @hamicek/noex-rules",
+      "github": "View on GitHub"
+    },
+    "features": {
+      "title": "Key Features",
+      "subtitle": "Everything you need for production rule processing and event correlation",
+      "forwardChaining": {
+        "title": "Forward Chaining Engine",
+        "description": "Priority-based rule execution with automatic re-evaluation on fact changes, events, and timer expirations. Individual rule failures don't affect the rest of the system."
+      },
+      "cep": {
+        "title": "Complex Event Processing",
+        "description": "Built-in temporal patterns: sequence detection, absence monitoring, count thresholds, and numeric aggregations — all with configurable time windows and grouping."
+      },
+      "dsl": {
+        "title": "Three DSL Flavors",
+        "description": "Write rules your way: fluent builder API with full TypeScript autocomplete, tagged template literals for compact syntax, or YAML files for configuration-driven workflows."
+      },
+      "factStore": {
+        "title": "Fact Store with Wildcards",
+        "description": "In-memory key-value storage with segmented wildcard pattern matching. Version tracking and change notifications power automatic rule re-evaluation."
+      },
+      "timers": {
+        "title": "Timer Management",
+        "description": "Declarative timers with human-readable durations. One-shot and repeating schedules, optional persistence, and automatic event emission on expiration."
+      },
+      "api": {
+        "title": "REST API & Web UI",
+        "description": "Production-ready Fastify server with Swagger docs, SSE streaming, webhooks, and a React-based admin interface. Manage rules, facts, and events via HTTP."
+      }
+    },
+    "dsl": {
+      "title": "Write Rules Your Way",
+      "subtitle": "Three DSL flavors for the same rule — pick the one that fits your workflow",
+      "tabs": {
+        "fluent": "Fluent Builder",
+        "template": "Tagged Template",
+        "yaml": "YAML"
+      }
+    },
+    "cep": {
+      "title": "Complex Event Processing",
+      "subtitle": "Detect patterns across event streams with time windows and grouping",
+      "sequence": {
+        "title": "Sequence",
+        "description": "Detect ordered events within a time window with optional strict mode and groupBy."
+      },
+      "absence": {
+        "title": "Absence",
+        "description": "Trigger when an expected event does not occur within the time window."
+      },
+      "count": {
+        "title": "Count",
+        "description": "Detect when event frequency exceeds a threshold within a sliding or tumbling window."
+      },
+      "aggregate": {
+        "title": "Aggregate",
+        "description": "Track numeric aggregations (sum, avg, min, max) over event fields in time windows."
+      }
+    },
+    "useCases": {
+      "title": "Real-world Use Cases",
+      "subtitle": "From fraud detection to IoT — noex-rules powers event-driven business logic",
+      "fraud": {
+        "title": "Fraud Detection",
+        "description": "Detect suspicious login patterns, unusual transaction amounts, and geographic anomalies in real-time."
+      },
+      "payment": {
+        "title": "Payment Orchestration",
+        "description": "Manage payment flows with timeout handling, retry logic, and automatic escalation on failure."
+      },
+      "loyalty": {
+        "title": "Loyalty Programs",
+        "description": "Calculate points, track tier upgrades, and trigger rewards based on customer activity patterns."
+      },
+      "iot": {
+        "title": "IoT Event Processing",
+        "description": "Monitor sensor data streams, detect threshold breaches, and correlate events across devices."
+      }
+    },
+    "cta": {
+      "title": "Start building intelligent event processing",
+      "subtitle": "Add noex-rules to your project in seconds",
+      "install": "npm install @hamicek/noex-rules",
+      "copied": "Copied!",
+      "github": "Star on GitHub",
+      "docs": "Read the Docs",
+      "backToNoex": "Back to noex"
+    }
   }
 }

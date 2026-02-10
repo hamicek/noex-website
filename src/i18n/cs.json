@@ -328,5 +328,103 @@
       "docs": "Přečíst dokumentaci",
       "backToNoex": "Zpět na noex"
     }
+  },
+  "rulesPage": {
+    "meta": {
+      "title": "noex-rules - Rule Engine s Complex Event Processing",
+      "description": "Forward chaining rule engine s CEP, třemi DSL flavory, integrovaným fact storem a produkčním REST API. Postavený na noex GenServer aktorech."
+    },
+    "hero": {
+      "headline": "Rule Engine s Complex Event Processing",
+      "subheadline": "Forward chaining engine s detekcí temporálních vzorů, třemi DSL flavory, integrovaným fact storem a produkčním REST/GraphQL API. Postavený na noex GenServer aktorech pro odolné zpracování pravidel.",
+      "install": "npm install @hamicek/noex-rules",
+      "github": "Zobrazit na GitHubu"
+    },
+    "features": {
+      "title": "Klíčové vlastnosti",
+      "subtitle": "Vše potřebné pro produkční zpracování pravidel a korelaci událostí",
+      "forwardChaining": {
+        "title": "Forward Chaining Engine",
+        "description": "Prioritní vyhodnocování pravidel s automatickým přepočtem při změnách faktů, událostí a vypršení timerů. Selhání jednotlivého pravidla neovlivní zbytek systému."
+      },
+      "cep": {
+        "title": "Complex Event Processing",
+        "description": "Vestavěné temporální vzory: detekce sekvencí, monitorování absencí, prahové hodnoty počtu a numerické agregace — vše s konfigurovatelnými časovými okny a seskupováním."
+      },
+      "dsl": {
+        "title": "Tři DSL flavory",
+        "description": "Pište pravidla po svém: fluent builder API s plným TypeScript autocomplete, tagged template literals pro kompaktní zápis, nebo YAML soubory pro konfigurační workflow."
+      },
+      "factStore": {
+        "title": "Fact Store s wildcards",
+        "description": "In-memory key-value úložiště se segmentovaným wildcard pattern matchingem. Verzování a notifikace o změnách pohání automatické přehodnocování pravidel."
+      },
+      "timers": {
+        "title": "Správa timerů",
+        "description": "Deklarativní timery s čitelným formátem doby trvání. Jednorázové i opakované plány, volitelná perzistence a automatická emise událostí při vypršení."
+      },
+      "api": {
+        "title": "REST API a Web UI",
+        "description": "Produkčně připravený Fastify server se Swagger dokumentací, SSE streamováním, webhooky a React administračním rozhraním. Spravujte pravidla, fakta a události přes HTTP."
+      }
+    },
+    "dsl": {
+      "title": "Pište pravidla po svém",
+      "subtitle": "Tři DSL flavory pro stejné pravidlo — vyberte si ten, který vyhovuje vašemu workflow",
+      "tabs": {
+        "fluent": "Fluent Builder",
+        "template": "Tagged Template",
+        "yaml": "YAML"
+      }
+    },
+    "cep": {
+      "title": "Complex Event Processing",
+      "subtitle": "Detekujte vzory v proudech událostí s časovými okny a seskupováním",
+      "sequence": {
+        "title": "Sequence",
+        "description": "Detekce uspořádaných událostí v časovém okně s volitelným striktním módem a groupBy."
+      },
+      "absence": {
+        "title": "Absence",
+        "description": "Spuštění, když očekávaná událost nenastane v rámci časového okna."
+      },
+      "count": {
+        "title": "Count",
+        "description": "Detekce překročení frekvenčního prahu v posuvném nebo překlápějícím se okně."
+      },
+      "aggregate": {
+        "title": "Aggregate",
+        "description": "Sledování numerických agregací (sum, avg, min, max) nad poli událostí v časových oknech."
+      }
+    },
+    "useCases": {
+      "title": "Reálné případy použití",
+      "subtitle": "Od detekce podvodů po IoT — noex-rules pohání event-driven byznys logiku",
+      "fraud": {
+        "title": "Detekce podvodů",
+        "description": "Detekujte podezřelé přihlašovací vzory, neobvyklé částky transakcí a geografické anomálie v reálném čase."
+      },
+      "payment": {
+        "title": "Platební orchestrace",
+        "description": "Spravujte platební toky s timeouty, logikou opakování a automatickou eskalací při selhání."
+      },
+      "loyalty": {
+        "title": "Věrnostní programy",
+        "description": "Počítejte body, sledujte upgrady úrovní a spouštějte odměny na základě vzorů zákaznické aktivity."
+      },
+      "iot": {
+        "title": "IoT zpracování událostí",
+        "description": "Monitorujte proudy dat ze senzorů, detekujte překročení prahových hodnot a korelujte události napříč zařízeními."
+      }
+    },
+    "cta": {
+      "title": "Začněte budovat inteligentní zpracování událostí",
+      "subtitle": "Přidejte noex-rules do svého projektu během vteřin",
+      "install": "npm install @hamicek/noex-rules",
+      "copied": "Zkopírováno!",
+      "github": "Hvězda na GitHubu",
+      "docs": "Přečíst dokumentaci",
+      "backToNoex": "Zpět na noex"
+    }
   }
 }

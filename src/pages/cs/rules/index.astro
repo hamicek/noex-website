@@ -1,0 +1,35 @@
+---
+import FullPageLayout from '../../../layouts/FullPageLayout.astro';
+import { getTranslations } from '../../../i18n/utils';
+import RulesHero from '../../../components/sections/rules/RulesHero.svelte';
+import RulesFeatures from '../../../components/sections/rules/RulesFeatures.svelte';
+import RulesDSL from '../../../components/sections/rules/RulesDSL.svelte';
+import RulesCEP from '../../../components/sections/rules/RulesCEP.svelte';
+import RulesUseCases from '../../../components/sections/rules/RulesUseCases.svelte';
+import RulesCallToAction from '../../../components/sections/rules/RulesCallToAction.svelte';
+
+const locale = 'cs';
+const translations = getTranslations(locale);
+const rules = translations.rulesPage;
+---
+
+<FullPageLayout
+  locale={locale}
+  currentPath="/rules/"
+  page="rules"
+  title={rules.meta.title}
+  description={rules.meta.description}
+>
+  <RulesHero translations={rules.hero} client:load />
+  <RulesFeatures translations={rules.features} client:visible />
+  <RulesDSL translations={rules.dsl} client:visible />
+  <RulesCEP translations={rules.cep} client:visible />
+  <RulesUseCases translations={rules.useCases} client:visible />
+  <RulesCallToAction
+    translations={rules.cta}
+    footerTranslations={translations.footer}
+    supportTranslations={translations.support}
+    locale={locale}
+    client:visible
+  />
+</FullPageLayout>
