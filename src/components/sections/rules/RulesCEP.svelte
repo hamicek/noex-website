@@ -92,7 +92,7 @@
     <div class="grid-pattern"></div>
   </div>
 
-  <div class="content-wrapper max-w-6xl mx-auto relative z-10">
+  <div class="content-wrapper w-full max-w-6xl mx-auto relative z-10">
     <h2
       id="rules-cep-title"
       class="section-title text-3xl md:text-5xl font-bold mb-4 text-text-primary text-center"
@@ -340,7 +340,7 @@
     }
 
     .code-snippet pre {
-      font-size: 0.68rem;
+      font-size: 0.72rem;
     }
 
     .gradient-blob-1,

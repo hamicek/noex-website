@@ -82,7 +82,7 @@
     <div class="grid-pattern"></div>
   </div>
 
-  <div class="content-wrapper max-w-6xl mx-auto relative z-10">
+  <div class="content-wrapper w-full max-w-6xl mx-auto relative z-10">
     <h2
       id="server-comparison-title"
       class="section-title text-3xl md:text-5xl font-bold mb-4 text-text-primary text-center"
@@ -99,7 +99,7 @@
     </p>
 
     <div class="table-wrapper glass-card" class:visible={isVisible}>
-      <div class="table-scroll">
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Scrollable comparison table">
         <table>
           <thead>
             <tr>
@@ -239,6 +239,10 @@
   .glass-card.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .table-wrapper {
+    position: relative;
   }
 
   .table-scroll {
@@ -381,18 +385,41 @@
   @media (max-width: 768px) {
     table {
       font-size: 0.75rem;
+      min-width: 640px;
     }
 
     th, td {
-      padding: 0.625rem 0.75rem;
+      padding: 0.5rem 0.625rem;
     }
 
     .feature-col {
-      min-width: 140px;
+      min-width: 120px;
+    }
+
+    .table-scroll {
+      position: relative;
+    }
+
+    /* Scroll fade hint on right edge */
+    .table-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 24px;
+      background: linear-gradient(to right, transparent, rgba(18, 18, 26, 0.9));
+      pointer-events: none;
+      z-index: 4;
+      border-radius: 0 16px 16px 0;
     }
 
     .differentiators-grid {
       grid-template-columns: 1fr;
+    }
+
+    .diff-card {
+      padding: 1.25rem;
     }
 
     .gradient-blob-1,

@@ -107,7 +107,7 @@
     <div class="dot-pattern"></div>
   </div>
 
-  <div class="content-wrapper max-w-6xl mx-auto relative z-10">
+  <div class="content-wrapper w-full max-w-6xl mx-auto relative z-10">
     <h2
       id="server-protocol-title"
       class="section-title text-3xl md:text-5xl font-bold mb-4 text-text-primary text-center"
@@ -285,6 +285,8 @@
     border-radius: 16px;
     backdrop-filter: blur(12px);
     padding: 1.5rem;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .card-section-title {
@@ -333,6 +335,7 @@
   }
 
   .message-code {
+    display: block;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-size: 0.7rem;
     color: var(--color-text-secondary);
@@ -481,22 +484,76 @@
   }
 
   @media (max-width: 768px) {
+    .glass-card {
+      padding: 1rem;
+    }
+
+    .card-section-title {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .message-examples {
+      gap: 0.75rem;
+    }
+
+    .message-code {
+      font-size: 0.62rem;
+      padding: 0.375rem 0.5rem;
+    }
+
+    .message-type-name {
+      font-size: 0.75rem;
+    }
+
+    .message-direction {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.375rem;
+    }
+
+    .ops-tab-bar {
+      margin: -1rem -1rem 1rem -1rem;
+      flex-wrap: wrap;
+    }
+
+    .ops-tab {
+      font-size: 0.7rem;
+      padding: 0.5rem 0.25rem;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .ops-badge {
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .ops-list {
+      gap: 0.375rem;
+    }
+
     .lifecycle-steps {
       flex-direction: column;
+      align-items: stretch;
     }
 
     .step-connector {
       transform: rotate(90deg);
+      align-self: center;
+    }
+
+    .step-label {
+      white-space: normal;
+      font-size: 0.75rem;
+    }
+
+    .lifecycle-step {
+      padding: 0.5rem 0.75rem;
     }
 
     .gradient-orb-1,
     .gradient-orb-2 {
       opacity: 0.05;
-    }
-
-    .ops-tab {
-      font-size: 0.7rem;
-      padding: 0.625rem 0.25rem;
     }
   }
 

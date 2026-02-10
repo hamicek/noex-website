@@ -178,7 +178,7 @@ await store.transaction(async (tx) => {
     <div class="grid-pattern"></div>
   </div>
 
-  <div class="content-wrapper max-w-4xl mx-auto relative z-10">
+  <div class="content-wrapper w-full max-w-4xl mx-auto relative z-10">
     <h2
       id="store-examples-title"
       class="section-title text-3xl md:text-5xl font-bold mb-4 text-text-primary text-center"
@@ -467,8 +467,8 @@ await store.transaction(async (tx) => {
     }
 
     .code-content {
-      font-size: 0.7rem;
-      padding: 1rem;
+      font-size: 0.75rem;
+      padding: 1rem 0.75rem;
       max-height: 400px;
     }
 
