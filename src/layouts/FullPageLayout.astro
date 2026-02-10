@@ -7,15 +7,21 @@ interface Props {
   locale: Locale;
   currentPath?: string;
   page?: 'home' | 'store' | 'rules';
+  title?: string;
+  description?: string;
 }
 
-const { locale, currentPath = '/', page = 'home' } = Astro.props;
+const { locale, currentPath = '/', page = 'home', title, description } = Astro.props;
 const t = useTranslations(locale);
 
 // Site configuration
 const siteUrl = 'https://noexjs.org';
 const currentUrl = new URL(getLocalizedPath(currentPath, locale), siteUrl).href;
 const ogImageUrl = `${siteUrl}/og-image.png`;
+
+// Page-specific meta (allow override via props)
+const pageTitle = title ?? t('meta.title');
+const pageDescription = description ?? t('meta.description');
 
 // Navigation translations
 const navTranslations = {
@@ -46,7 +52,7 @@ const structuredData = {
   "name": "noex",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Node.js",
-  "description": t('meta.description'),
+  "description": pageDescription,
   "url": siteUrl,
   "author": {
     "@type": "Organization",
@@ -69,9 +75,9 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Primary Meta Tags -->
-    <title>{t('meta.title')}</title>
-    <meta name="title" content={t('meta.title')} />
-    <meta name="description" content={t('meta.description')} />
+    <title>{pageTitle}</title>
+    <meta name="title" content={pageTitle} />
+    <meta name="description" content={pageDescription} />
     <meta name="author" content="noex" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0a0a0f" />
@@ -93,8 +99,8 @@ const structuredData = {
     <!-- OpenGraph Meta Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={currentUrl} />
-    <meta property="og:title" content={t('meta.title')} />
-    <meta property="og:description" content={t('meta.description')} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -105,8 +111,8 @@ const structuredData = {
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={currentUrl} />
-    <meta name="twitter:title" content={t('meta.title')} />
-    <meta name="twitter:description" content={t('meta.description')} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content="noex - Erlang/OTP Patterns for Node.js" />
 

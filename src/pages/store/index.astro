@@ -1,0 +1,33 @@
+---
+import FullPageLayout from '../../layouts/FullPageLayout.astro';
+import { getTranslations } from '../../i18n/utils';
+import StoreHero from '../../components/sections/store/StoreHero.svelte';
+import StoreFeatures from '../../components/sections/store/StoreFeatures.svelte';
+import StoreArchitecture from '../../components/sections/store/StoreArchitecture.svelte';
+import StoreCodeExamples from '../../components/sections/store/StoreCodeExamples.svelte';
+import StoreCallToAction from '../../components/sections/store/StoreCallToAction.svelte';
+
+const locale = 'en';
+const translations = getTranslations(locale);
+const store = translations.storePage;
+---
+
+<FullPageLayout
+  locale={locale}
+  currentPath="/store/"
+  page="store"
+  title={store.meta.title}
+  description={store.meta.description}
+>
+  <StoreHero translations={store.hero} client:load />
+  <StoreFeatures translations={store.features} client:visible />
+  <StoreArchitecture translations={store.architecture} client:visible />
+  <StoreCodeExamples translations={store.codeExamples} client:visible />
+  <StoreCallToAction
+    translations={store.cta}
+    footerTranslations={translations.footer}
+    supportTranslations={translations.support}
+    locale={locale}
+    client:visible
+  />
+</FullPageLayout>
