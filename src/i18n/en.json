@@ -16,6 +16,7 @@
     "cta": "Get Started",
     "store": "Store",
     "rules": "Rules",
+    "server": "Server",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },
@@ -622,6 +623,205 @@
       "title": "Start building intelligent event processing",
       "subtitle": "Add noex-rules to your project in seconds",
       "install": "npm install @hamicek/noex-rules",
+      "copied": "Copied!",
+      "github": "Star on GitHub",
+      "docs": "Read the Docs",
+      "backToNoex": "Back to noex"
+    }
+  },
+  "serverPage": {
+    "meta": {
+      "title": "noex-server - Real-time WebSocket Server for noex Ecosystem",
+      "description": "WebSocket server with GenServer per-connection isolation, reactive subscriptions, authentication, rate limiting, and backpressure management. Built on noex primitives."
+    },
+    "hero": {
+      "headline": "Real-time WebSocket Server",
+      "subheadline": "JSON-based protocol over WebSocket with GenServer per-connection isolation, reactive store subscriptions, rules engine proxy, pluggable authentication, and built-in backpressure management.",
+      "install": "npm install @hamicek/noex-server",
+      "github": "View on GitHub"
+    },
+    "features": {
+      "title": "Key Features",
+      "subtitle": "Everything you need for real-time WebSocket communication in Node.js",
+      "genserver": {
+        "title": "GenServer per Connection",
+        "description": "Each WebSocket connection runs in its own GenServer actor, supervised with simple_one_for_one strategy. If one connection crashes, others continue unaffected."
+      },
+      "storeProxy": {
+        "title": "Full Store Proxy",
+        "description": "Complete CRUD operations, reactive query subscriptions with automatic push updates, cursor-based pagination, aggregations, and multi-bucket ACID transactions over WebSocket."
+      },
+      "rulesProxy": {
+        "title": "Rules Engine Proxy",
+        "description": "Event emission, fact management, pattern-based wildcard queries, and real-time event subscriptions — all proxied through the WebSocket connection."
+      },
+      "auth": {
+        "title": "Authentication & Authorization",
+        "description": "Pluggable token validation with per-connection sessions. Role-based permission checks on every operation. Session expiration with automatic enforcement."
+      },
+      "rateLimit": {
+        "title": "Rate Limiting",
+        "description": "Sliding window rate limiter with configurable max requests and window duration. Per-user for authenticated or per-IP for anonymous connections."
+      },
+      "heartbeat": {
+        "title": "Heartbeat Ping/Pong",
+        "description": "Automatic dead connection detection with configurable intervals (default 30s) and timeout (default 10s). Connections closed with code 4001 on timeout."
+      },
+      "backpressure": {
+        "title": "Write-Buffer Backpressure",
+        "description": "Protection against slow clients. When WebSocket write buffer exceeds the high water mark (default 80% of 1 MB), push messages are dropped to prevent memory exhaustion."
+      },
+      "gracefulShutdown": {
+        "title": "Graceful Shutdown",
+        "description": "Clients receive a system shutdown notification with grace period. New connections rejected while existing clients have time to disconnect cleanly."
+      }
+    },
+    "protocol": {
+      "title": "Protocol & Messages",
+      "subtitle": "JSON over WebSocket, protocol version 1.0.0. Request-response with async push notifications.",
+      "lifecycle": "Connection Lifecycle",
+      "lifecycleSteps": {
+        "connect": "WebSocket connect",
+        "welcome": "Server sends welcome message with protocol version",
+        "auth": "Client authenticates (if auth required)",
+        "requestResponse": "Client sends requests, server responds",
+        "push": "Server pushes subscription updates",
+        "disconnect": "Client or server closes connection"
+      },
+      "messageTypes": {
+        "title": "Message Types",
+        "request": "Request",
+        "response": "Response",
+        "push": "Push",
+        "heartbeat": "Heartbeat"
+      },
+      "tabs": {
+        "storeOps": "Store Operations",
+        "rulesOps": "Rules Operations",
+        "authOps": "Auth Operations",
+        "serverOps": "Server Operations"
+      },
+      "storeOps": ["insert", "get", "update", "delete", "all", "where", "findOne", "count", "first", "last", "paginate", "clear", "sum", "avg", "min", "max", "subscribe", "unsubscribe", "transaction", "buckets", "stats"],
+      "rulesOps": ["emit", "setFact", "getFact", "deleteFact", "queryFacts", "getAllFacts", "subscribe", "unsubscribe", "stats"],
+      "authOps": ["login", "logout", "whoami"],
+      "serverOps": ["stats", "connections"]
+    },
+    "architecture": {
+      "title": "Supervision Architecture",
+      "subtitle": "GenServer per connection, supervised with simple_one_for_one strategy. Crashed connections are cleaned up automatically.",
+      "server": "NoexServer",
+      "httpServer": "HTTP Server",
+      "supervisor": "ConnectionSupervisor",
+      "connectionServer": "ConnectionServer",
+      "registry": "ConnectionRegistry",
+      "rateLimiter": "RateLimiter",
+      "connectionIsolation": "Each WebSocket connection runs in its own GenServer — full process isolation, sequential message processing, independent subscription state and session.",
+      "requestPipeline": "Request pipeline: JSON parse → Auth check → Rate limit → Route to store/rules/auth proxy → Serialize response. Push messages flow from store/rules subscriptions through the connection GenServer."
+    },
+    "codeExamples": {
+      "title": "See It in Action",
+      "subtitle": "Real examples showing server startup, client CRUD, reactive subscriptions, and transactions",
+      "tabs": {
+        "startup": "Server Startup",
+        "crud": "Client CRUD",
+        "subscriptions": "Reactive Subscriptions",
+        "transactions": "Transactions"
+      }
+    },
+    "comparison": {
+      "title": "How It Compares",
+      "subtitle": "noex-server vs popular real-time WebSocket solutions",
+      "noexServer": "noex-server",
+      "competitors": ["Socket.IO", "Supabase Realtime", "Firebase RTDB", "Ably", "Pusher"],
+      "features": [
+        {
+          "label": "Protocol",
+          "noex": "JSON over WS",
+          "others": ["Custom protocol", "Postgres CDC", "Custom binary", "Custom protocol", "Custom protocol"]
+        },
+        {
+          "label": "Per-connection Isolation",
+          "noex": "GenServer actor",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Reactive Queries",
+          "noex": "Convex-style subscriptions",
+          "others": ["Manual rooms", "Postgres changes", "Realtime sync", "Pub/sub", "Channels"]
+        },
+        {
+          "label": "ACID Transactions",
+          "noex": "Multi-bucket over WS",
+          "others": ["\u2014", "Postgres transactions", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Built-in Rule Engine",
+          "values": [true, false, false, false, false, false]
+        },
+        {
+          "label": "Backpressure Management",
+          "noex": "Write-buffer based",
+          "others": ["\u2014", "\u2014", "\u2014", "Server-side", "\u2014"]
+        },
+        {
+          "label": "Heartbeat / Dead Conn Detection",
+          "values": [true, true, true, true, true, true]
+        },
+        {
+          "label": "Supervision Tree",
+          "noex": "OTP simple_one_for_one",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Self-hosted",
+          "values": [true, true, false, false, false, false]
+        },
+        {
+          "label": "Authentication",
+          "noex": "Pluggable token validation",
+          "others": ["Middleware", "JWT / RLS", "Firebase Auth", "Token-based", "Token-based"]
+        },
+        {
+          "label": "Graceful Shutdown",
+          "noex": "Client notification + grace period",
+          "others": ["\u2014", "Managed", "Managed", "Managed", "Managed"]
+        },
+        {
+          "label": "Status",
+          "noex": "Active",
+          "others": ["Active", "Active", "Active", "Active", "Active"]
+        }
+      ],
+      "differentiators": {
+        "title": "What Makes noex-server Unique",
+        "items": [
+          {
+            "title": "GenServer per Connection",
+            "description": "Each WebSocket connection is a supervised GenServer actor. Sequential message processing eliminates race conditions, and crash isolation prevents one bad connection from affecting others."
+          },
+          {
+            "title": "Integrated noex-store Reactivity",
+            "description": "Convex-style reactive query subscriptions are proxied directly over WebSocket. Clients receive automatic push updates when underlying data changes."
+          },
+          {
+            "title": "Built-in Rule Engine Proxy",
+            "description": "The only WebSocket server with integrated rule engine access. Emit events, manage facts, and subscribe to pattern-matched rule events in real-time."
+          },
+          {
+            "title": "Write-Buffer Backpressure",
+            "description": "Protects against slow clients by monitoring WebSocket write buffer. When buffer exceeds the high water mark, push messages are safely dropped to prevent memory exhaustion."
+          },
+          {
+            "title": "ACID Transactions over WebSocket",
+            "description": "Multi-bucket atomic transactions with optimistic locking, sent as a single WebSocket message. Read-your-own-writes and automatic rollback on conflict."
+          }
+        ]
+      }
+    },
+    "cta": {
+      "title": "Start building real-time applications",
+      "subtitle": "Add noex-server to your project in seconds",
+      "install": "npm install @hamicek/noex-server",
       "copied": "Copied!",
       "github": "Star on GitHub",
       "docs": "Read the Docs",

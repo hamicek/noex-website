@@ -1,0 +1,37 @@
+---
+import FullPageLayout from '../../layouts/FullPageLayout.astro';
+import { getTranslations } from '../../i18n/utils';
+import ServerHero from '../../components/sections/server/ServerHero.svelte';
+import ServerFeatures from '../../components/sections/server/ServerFeatures.svelte';
+import ServerProtocol from '../../components/sections/server/ServerProtocol.svelte';
+import ServerArchitecture from '../../components/sections/server/ServerArchitecture.svelte';
+import ServerCodeExamples from '../../components/sections/server/ServerCodeExamples.svelte';
+import ServerComparison from '../../components/sections/server/ServerComparison.svelte';
+import ServerCallToAction from '../../components/sections/server/ServerCallToAction.svelte';
+
+const locale = 'en';
+const translations = getTranslations(locale);
+const server = translations.serverPage;
+---
+
+<FullPageLayout
+  locale={locale}
+  currentPath="/server/"
+  page="server"
+  title={server.meta.title}
+  description={server.meta.description}
+>
+  <ServerHero translations={server.hero} client:load />
+  <ServerFeatures translations={server.features} client:visible />
+  <ServerProtocol translations={server.protocol} client:visible />
+  <ServerArchitecture translations={server.architecture} client:visible />
+  <ServerCodeExamples translations={server.codeExamples} client:visible />
+  <ServerComparison translations={server.comparison} client:visible />
+  <ServerCallToAction
+    translations={server.cta}
+    footerTranslations={translations.footer}
+    supportTranslations={translations.support}
+    locale={locale}
+    client:visible
+  />
+</FullPageLayout>

@@ -16,6 +16,7 @@
     "cta": "Začít",
     "store": "Store",
     "rules": "Rules",
+    "server": "Server",
     "openMenu": "Otevřít menu",
     "closeMenu": "Zavřít menu"
   },
@@ -622,6 +623,205 @@
       "title": "Začněte budovat inteligentní zpracování událostí",
       "subtitle": "Přidejte noex-rules do svého projektu během vteřin",
       "install": "npm install @hamicek/noex-rules",
+      "copied": "Zkopírováno!",
+      "github": "Hvězda na GitHubu",
+      "docs": "Přečíst dokumentaci",
+      "backToNoex": "Zpět na noex"
+    }
+  },
+  "serverPage": {
+    "meta": {
+      "title": "noex-server - Real-time WebSocket server pro noex ekosystém",
+      "description": "WebSocket server s GenServer izolací per spojení, reaktivními subskripcemi, autentizací, rate limitingem a backpressure managementem. Postavený na noex primitivech."
+    },
+    "hero": {
+      "headline": "Real-time WebSocket Server",
+      "subheadline": "JSON protokol přes WebSocket s GenServer izolací per spojení, reaktivními store subskripcemi, proxy pro rules engine, pluggable autentizací a vestavěným backpressure managementem.",
+      "install": "npm install @hamicek/noex-server",
+      "github": "Zobrazit na GitHubu"
+    },
+    "features": {
+      "title": "Klíčové vlastnosti",
+      "subtitle": "Vše potřebné pro real-time WebSocket komunikaci v Node.js",
+      "genserver": {
+        "title": "GenServer per spojení",
+        "description": "Každé WebSocket spojení běží ve vlastním GenServer aktoru, supervisovaném strategií simple_one_for_one. Pokud jedno spojení spadne, ostatní pokračují bez přerušení."
+      },
+      "storeProxy": {
+        "title": "Plný Store Proxy",
+        "description": "Kompletní CRUD operace, reaktivní query subskripce s automatickými push aktualizacemi, kurzorová paginace, agregace a multi-bucket ACID transakce přes WebSocket."
+      },
+      "rulesProxy": {
+        "title": "Rules Engine Proxy",
+        "description": "Emise událostí, správa faktů, wildcard pattern dotazy a real-time subskripce událostí — vše proxováno přes WebSocket spojení."
+      },
+      "auth": {
+        "title": "Autentizace a autorizace",
+        "description": "Pluggable validace tokenů s per-connection sessions. Role-based kontrola oprávnění na každé operaci. Expirace sessions s automatickým vynucením."
+      },
+      "rateLimit": {
+        "title": "Rate Limiting",
+        "description": "Sliding window rate limiter s konfigurovatelným maximem požadavků a délkou okna. Per-user pro autentizované nebo per-IP pro anonymní spojení."
+      },
+      "heartbeat": {
+        "title": "Heartbeat Ping/Pong",
+        "description": "Automatická detekce mrtvých spojení s konfigurovatelnými intervaly (výchozí 30s) a timeoutem (výchozí 10s). Spojení uzavřeno kódem 4001 při timeoutu."
+      },
+      "backpressure": {
+        "title": "Write-Buffer Backpressure",
+        "description": "Ochrana před pomalými klienty. Když write buffer WebSocket překročí high water mark (výchozí 80% z 1 MB), push zprávy jsou zahazovány pro prevenci vyčerpání paměti."
+      },
+      "gracefulShutdown": {
+        "title": "Graceful Shutdown",
+        "description": "Klienti obdrží systémovou notifikaci o vypnutí s grace periodem. Nová spojení jsou odmítána, zatímco existující klienti mají čas se čistě odpojit."
+      }
+    },
+    "protocol": {
+      "title": "Protokol a zprávy",
+      "subtitle": "JSON přes WebSocket, protokol verze 1.0.0. Request-response s asynchronními push notifikacemi.",
+      "lifecycle": "Životní cyklus spojení",
+      "lifecycleSteps": {
+        "connect": "WebSocket připojení",
+        "welcome": "Server pošle welcome zprávu s verzí protokolu",
+        "auth": "Klient se autentizuje (pokud je vyžadováno)",
+        "requestResponse": "Klient posílá požadavky, server odpovídá",
+        "push": "Server pushuje aktualizace subskripcí",
+        "disconnect": "Klient nebo server uzavře spojení"
+      },
+      "messageTypes": {
+        "title": "Typy zpráv",
+        "request": "Požadavek",
+        "response": "Odpověď",
+        "push": "Push",
+        "heartbeat": "Heartbeat"
+      },
+      "tabs": {
+        "storeOps": "Store operace",
+        "rulesOps": "Rules operace",
+        "authOps": "Auth operace",
+        "serverOps": "Server operace"
+      },
+      "storeOps": ["insert", "get", "update", "delete", "all", "where", "findOne", "count", "first", "last", "paginate", "clear", "sum", "avg", "min", "max", "subscribe", "unsubscribe", "transaction", "buckets", "stats"],
+      "rulesOps": ["emit", "setFact", "getFact", "deleteFact", "queryFacts", "getAllFacts", "subscribe", "unsubscribe", "stats"],
+      "authOps": ["login", "logout", "whoami"],
+      "serverOps": ["stats", "connections"]
+    },
+    "architecture": {
+      "title": "Supervision architektura",
+      "subtitle": "GenServer per spojení, supervisovaný strategií simple_one_for_one. Spadlá spojení jsou automaticky vyčištěna.",
+      "server": "NoexServer",
+      "httpServer": "HTTP Server",
+      "supervisor": "ConnectionSupervisor",
+      "connectionServer": "ConnectionServer",
+      "registry": "ConnectionRegistry",
+      "rateLimiter": "RateLimiter",
+      "connectionIsolation": "Každé WebSocket spojení běží ve vlastním GenServeru — plná izolace procesů, sekvenční zpracování zpráv, nezávislý stav subskripcí a session.",
+      "requestPipeline": "Request pipeline: JSON parse → Auth kontrola → Rate limit → Směrování na store/rules/auth proxy → Serializace odpovědi. Push zprávy tečou ze store/rules subskripcí přes connection GenServer."
+    },
+    "codeExamples": {
+      "title": "Podívejte se v akci",
+      "subtitle": "Reálné ukázky: spuštění serveru, klientský CRUD, reaktivní subskripce a transakce",
+      "tabs": {
+        "startup": "Spuštění serveru",
+        "crud": "Klientský CRUD",
+        "subscriptions": "Reaktivní subskripce",
+        "transactions": "Transakce"
+      }
+    },
+    "comparison": {
+      "title": "Srovnání",
+      "subtitle": "noex-server vs populární real-time WebSocket řešení",
+      "noexServer": "noex-server",
+      "competitors": ["Socket.IO", "Supabase Realtime", "Firebase RTDB", "Ably", "Pusher"],
+      "features": [
+        {
+          "label": "Protokol",
+          "noex": "JSON přes WS",
+          "others": ["Vlastní protokol", "Postgres CDC", "Vlastní binární", "Vlastní protokol", "Vlastní protokol"]
+        },
+        {
+          "label": "Izolace per spojení",
+          "noex": "GenServer aktor",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Reaktivní dotazy",
+          "noex": "Convex-style subskripce",
+          "others": ["Manuální rooms", "Postgres změny", "Realtime sync", "Pub/sub", "Channels"]
+        },
+        {
+          "label": "ACID transakce",
+          "noex": "Multi-bucket přes WS",
+          "others": ["\u2014", "Postgres transakce", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Vestavěný Rule Engine",
+          "values": [true, false, false, false, false, false]
+        },
+        {
+          "label": "Backpressure management",
+          "noex": "Na základě write bufferu",
+          "others": ["\u2014", "\u2014", "\u2014", "Server-side", "\u2014"]
+        },
+        {
+          "label": "Heartbeat / Detekce mrtvých spojení",
+          "values": [true, true, true, true, true, true]
+        },
+        {
+          "label": "Supervision strom",
+          "noex": "OTP simple_one_for_one",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Self-hosted",
+          "values": [true, true, false, false, false, false]
+        },
+        {
+          "label": "Autentizace",
+          "noex": "Pluggable validace tokenů",
+          "others": ["Middleware", "JWT / RLS", "Firebase Auth", "Token-based", "Token-based"]
+        },
+        {
+          "label": "Graceful Shutdown",
+          "noex": "Notifikace klientů + grace period",
+          "others": ["\u2014", "Managed", "Managed", "Managed", "Managed"]
+        },
+        {
+          "label": "Stav",
+          "noex": "Aktivní",
+          "others": ["Aktivní", "Aktivní", "Aktivní", "Aktivní", "Aktivní"]
+        }
+      ],
+      "differentiators": {
+        "title": "Čím je noex-server unikátní",
+        "items": [
+          {
+            "title": "GenServer per spojení",
+            "description": "Každé WebSocket spojení je supervisovaný GenServer aktor. Sekvenční zpracování zpráv eliminuje race conditions a izolace pádů zabraňuje ovlivnění ostatních spojení."
+          },
+          {
+            "title": "Integrovaná noex-store reaktivita",
+            "description": "Convex-style reaktivní query subskripce jsou proxovány přímo přes WebSocket. Klienti automaticky dostávají push aktualizace při změně podkladových dat."
+          },
+          {
+            "title": "Vestavěný Rule Engine Proxy",
+            "description": "Jediný WebSocket server s integrovaným přístupem k rule enginu. Emitujte události, spravujte fakta a odebírejte pattern-matched rule eventy v reálném čase."
+          },
+          {
+            "title": "Write-Buffer Backpressure",
+            "description": "Chrání před pomalými klienty monitorováním write bufferu WebSocket. Když buffer překročí high water mark, push zprávy jsou bezpečně zahazovány pro prevenci vyčerpání paměti."
+          },
+          {
+            "title": "ACID transakce přes WebSocket",
+            "description": "Multi-bucket atomické transakce s optimistickým zamykáním, odeslané jako jediná WebSocket zpráva. Read-your-own-writes a automatický rollback při konfliktu."
+          }
+        ]
+      }
+    },
+    "cta": {
+      "title": "Začněte budovat real-time aplikace",
+      "subtitle": "Přidejte noex-server do svého projektu během vteřin",
+      "install": "npm install @hamicek/noex-server",
       "copied": "Zkopírováno!",
       "github": "Hvězda na GitHubu",
       "docs": "Přečíst dokumentaci",
