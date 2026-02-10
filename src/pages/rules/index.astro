@@ -6,6 +6,7 @@ import RulesFeatures from '../../components/sections/rules/RulesFeatures.svelte'
 import RulesDSL from '../../components/sections/rules/RulesDSL.svelte';
 import RulesCEP from '../../components/sections/rules/RulesCEP.svelte';
 import RulesUseCases from '../../components/sections/rules/RulesUseCases.svelte';
+import RulesComparison from '../../components/sections/rules/RulesComparison.svelte';
 import RulesCallToAction from '../../components/sections/rules/RulesCallToAction.svelte';
 
 const locale = 'en';
@@ -25,6 +26,7 @@ const rules = translations.rulesPage;
   <RulesDSL translations={rules.dsl} client:visible />
   <RulesCEP translations={rules.cep} client:visible />
   <RulesUseCases translations={rules.useCases} client:visible />
+  <RulesComparison translations={rules.comparison} client:visible />
   <RulesCallToAction
     translations={rules.cta}
     footerTranslations={translations.footer}

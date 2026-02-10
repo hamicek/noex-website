@@ -319,6 +319,93 @@
         "transactions": "Transactions"
       }
     },
+    "comparison": {
+      "title": "How It Compares",
+      "subtitle": "noex-store vs popular reactive stores and client-side databases",
+      "noexStore": "noex-store",
+      "competitors": ["RxDB", "TinyBase", "SignalDB", "LokiJS", "Dexie.js", "WatermelonDB"],
+      "features": [
+        {
+          "label": "Reactive Queries",
+          "noex": "Convex-style",
+          "others": ["RxJS Observables", "Query engine", "Signal-based", "DynamicViews", "liveQuery", "observe()"]
+        },
+        {
+          "label": "Schema Validation",
+          "noex": "Built-in DSL",
+          "others": ["JSON Schema", "Schematizers", "Validate event", "\u2014", "\u2014", "Column types"]
+        },
+        {
+          "label": "Multi-collection Transactions",
+          "noex": "Optimistic locking",
+          "others": ["\u2014", "Single-store", "\u2014", "Single-coll.", "ACID", "Writer blocks"]
+        },
+        {
+          "label": "Persistence",
+          "noex": "Adapter-based",
+          "others": ["Swappable storage", "Adapters", "Adapters", "Adapters", "IndexedDB", "SQLite"]
+        },
+        {
+          "label": "TTL / Auto-expiration",
+          "noex": "First-class",
+          "others": ["Cleanup only", "\u2014", "\u2014", "Buggy", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Event Bus with Wildcards",
+          "noex": "Topic pub/sub",
+          "others": ["RxJS streams", "Granular listeners", "Collection events", "Collection events", "Hooks", "Observables"]
+        },
+        {
+          "label": "In-memory First",
+          "values": [true, false, true, true, true, false, false]
+        },
+        {
+          "label": "Supervision Tree",
+          "noex": "OTP one_for_one",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Secondary Indexes",
+          "noex": "Unique + non-unique",
+          "others": ["JSON Schema", "Indexes API", "Query selectors", "Unique + binary", "Core feature", "isIndexed"]
+        },
+        {
+          "label": "Bundle Size (gzip)",
+          "noex": "~5 kB",
+          "others": ["60\u2013150+ kB", "3.5\u20138 kB", "~5\u20138 kB", "~20 kB", "~26 kB", "~2 MB"]
+        },
+        {
+          "label": "Status",
+          "noex": "Active",
+          "others": ["Active (freemium)", "Active", "Active", "Archived", "Active", "Active"]
+        }
+      ],
+      "differentiators": {
+        "title": "What Makes noex-store Unique",
+        "items": [
+          {
+            "title": "Supervision Tree",
+            "description": "Each bucket is an isolated GenServer actor. If one crashes, the supervisor restarts it while siblings continue unaffected."
+          },
+          {
+            "title": "First-class TTL",
+            "description": "Declarative per-bucket expiration with automatic background purge and _expiresAt metadata."
+          },
+          {
+            "title": "Convex-style Reactive Queries",
+            "description": "Plain async functions become live subscriptions with automatic bucket-level and record-level dependency tracking."
+          },
+          {
+            "title": "Multi-bucket ACID Transactions",
+            "description": "Version-based optimistic locking with atomic commit and best-effort rollback across collections."
+          },
+          {
+            "title": "Wildcard Event Bus",
+            "description": "Subscribe to patterns like bucket.*.deleted or bucket.users.* across the entire store."
+          }
+        ]
+      }
+    },
     "cta": {
       "title": "Start building reactive data layers",
       "subtitle": "Add noex-store to your project in seconds",
@@ -415,6 +502,120 @@
       "iot": {
         "title": "IoT Event Processing",
         "description": "Monitor sensor data streams, detect threshold breaches, and correlate events across devices."
+      }
+    },
+    "comparison": {
+      "title": "How It Compares",
+      "subtitle": "noex-rules vs popular JavaScript rule engines",
+      "noexRules": "noex-rules",
+      "competitors": ["json-rules-engine", "nools", "node-rules", "rools", "zen-engine"],
+      "features": [
+        {
+          "label": "Forward Chaining",
+          "noex": "Yes",
+          "others": ["Yes", "Yes (Rete)", "Yes", "Yes", "Decision tables"]
+        },
+        {
+          "label": "CEP / Temporal Patterns",
+          "noex": "Sequence, absence, count, aggregate",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "DSL",
+          "noex": "Fluent + templates",
+          "others": ["JSON only", "Custom DSL", "JSON only", "Plain objects", "DMN / FEEL"]
+        },
+        {
+          "label": "YAML Rule Definitions",
+          "values": [true, false, false, false, false, false]
+        },
+        {
+          "label": "Fact Store with Pattern Matching",
+          "noex": "Built-in wildcards",
+          "others": ["Almanac", "Working memory", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Timer Management",
+          "noex": "Built-in DSL",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Event Correlation",
+          "noex": "Correlation + causation IDs",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Wildcard Event Subscriptions",
+          "noex": "Topic patterns",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "REST API",
+          "noex": "Built-in (Fastify)",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "SSE + Webhooks",
+          "values": [true, false, false, false, false, false]
+        },
+        {
+          "label": "String Interpolation",
+          "noex": "${expression}",
+          "others": ["\u2014", "JS in DSL", "\u2014", "\u2014", "FEEL expressions"]
+        },
+        {
+          "label": "External Service Calls",
+          "noex": "call_service action",
+          "others": ["Custom operators", "Custom functions", "Custom handlers", "\u2014", "Custom nodes"]
+        },
+        {
+          "label": "OTP Supervision",
+          "noex": "noex GenServer",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Priority-based Execution",
+          "noex": "Yes",
+          "others": ["Yes", "Salience", "Yes", "Yes", "Row order"]
+        },
+        {
+          "label": "OpenAPI / Swagger",
+          "values": [true, false, false, false, false, false]
+        },
+        {
+          "label": "Status",
+          "noex": "Active",
+          "others": ["Active", "Archived", "Low activity", "Active", "Active"]
+        }
+      ],
+      "differentiators": {
+        "title": "What Makes noex-rules Unique",
+        "items": [
+          {
+            "title": "Complex Event Processing",
+            "description": "The only JS rule engine with built-in CEP: sequence detection, absence monitoring, frequency counting, and aggregate thresholds with time windows."
+          },
+          {
+            "title": "Three DSL Flavors",
+            "description": "Fluent builder with TypeScript autocomplete, tagged template literals for quick prototyping, and YAML for configuration-driven workflows."
+          },
+          {
+            "title": "Integrated Fact Store",
+            "description": "Wildcard pattern queries with automatic rule re-evaluation on fact changes. No separate state management needed."
+          },
+          {
+            "title": "Built-in Timer Management",
+            "description": "Declarative timers with human-readable durations, repeat intervals, and automatic event emission on expiry."
+          },
+          {
+            "title": "Production-ready REST API",
+            "description": "Fastify-based HTTP layer with SSE streaming, HMAC-signed webhooks, and Swagger documentation out of the box."
+          },
+          {
+            "title": "OTP Supervision",
+            "description": "Built on noex GenServer actors. If the engine crashes, the supervisor restarts it while the rest of your application continues."
+          }
+        ]
       }
     },
     "cta": {

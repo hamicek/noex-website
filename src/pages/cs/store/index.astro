@@ -5,6 +5,7 @@ import StoreHero from '../../../components/sections/store/StoreHero.svelte';
 import StoreFeatures from '../../../components/sections/store/StoreFeatures.svelte';
 import StoreArchitecture from '../../../components/sections/store/StoreArchitecture.svelte';
 import StoreCodeExamples from '../../../components/sections/store/StoreCodeExamples.svelte';
+import StoreComparison from '../../../components/sections/store/StoreComparison.svelte';
 import StoreCallToAction from '../../../components/sections/store/StoreCallToAction.svelte';
 
 const locale = 'cs';
@@ -23,6 +24,7 @@ const store = translations.storePage;
   <StoreFeatures translations={store.features} client:visible />
   <StoreArchitecture translations={store.architecture} client:visible />
   <StoreCodeExamples translations={store.codeExamples} client:visible />
+  <StoreComparison translations={store.comparison} client:visible />
   <StoreCallToAction
     translations={store.cta}
     footerTranslations={translations.footer}

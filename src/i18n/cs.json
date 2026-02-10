@@ -319,6 +319,93 @@
         "transactions": "Transakce"
       }
     },
+    "comparison": {
+      "title": "Srovnání",
+      "subtitle": "noex-store vs populární reaktivní stores a klientské databáze",
+      "noexStore": "noex-store",
+      "competitors": ["RxDB", "TinyBase", "SignalDB", "LokiJS", "Dexie.js", "WatermelonDB"],
+      "features": [
+        {
+          "label": "Reaktivní dotazy",
+          "noex": "Convex-style",
+          "others": ["RxJS Observables", "Query engine", "Signal-based", "DynamicViews", "liveQuery", "observe()"]
+        },
+        {
+          "label": "Validace schématu",
+          "noex": "Vestavěné DSL",
+          "others": ["JSON Schema", "Schematizers", "Validate event", "\u2014", "\u2014", "Column types"]
+        },
+        {
+          "label": "Multi-kolekční transakce",
+          "noex": "Optimistické zamykání",
+          "others": ["\u2014", "Single-store", "\u2014", "Single-coll.", "ACID", "Writer blocks"]
+        },
+        {
+          "label": "Perzistence",
+          "noex": "Adapter-based",
+          "others": ["Swappable storage", "Adapters", "Adapters", "Adapters", "IndexedDB", "SQLite"]
+        },
+        {
+          "label": "TTL / Auto-expirace",
+          "noex": "First-class",
+          "others": ["Cleanup only", "\u2014", "\u2014", "Buggy", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Event bus s wildcards",
+          "noex": "Topic pub/sub",
+          "others": ["RxJS streams", "Granular listeners", "Collection events", "Collection events", "Hooks", "Observables"]
+        },
+        {
+          "label": "In-memory first",
+          "values": [true, false, true, true, true, false, false]
+        },
+        {
+          "label": "Supervision strom",
+          "noex": "OTP one_for_one",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Sekundární indexy",
+          "noex": "Unique + non-unique",
+          "others": ["JSON Schema", "Indexes API", "Query selectors", "Unique + binary", "Core feature", "isIndexed"]
+        },
+        {
+          "label": "Velikost (gzip)",
+          "noex": "~5 kB",
+          "others": ["60\u2013150+ kB", "3.5\u20138 kB", "~5\u20138 kB", "~20 kB", "~26 kB", "~2 MB"]
+        },
+        {
+          "label": "Stav",
+          "noex": "Aktivní",
+          "others": ["Aktivní (freemium)", "Aktivní", "Aktivní", "Archivovaný", "Aktivní", "Aktivní"]
+        }
+      ],
+      "differentiators": {
+        "title": "Čím je noex-store unikátní",
+        "items": [
+          {
+            "title": "Supervision strom",
+            "description": "Každý bucket je izolovaný GenServer aktor. Pokud jeden spadne, supervisor ho restartuje, zatímco ostatní pokračují bez přerušení."
+          },
+          {
+            "title": "First-class TTL",
+            "description": "Deklarativní expirace per bucket s automatickým mazáním na pozadí a _expiresAt metadaty."
+          },
+          {
+            "title": "Reaktivní dotazy ve stylu Convex",
+            "description": "Běžné async funkce se stávají živými subskripcemi s automatickým sledováním závislostí na úrovni bucketu i záznamu."
+          },
+          {
+            "title": "Multi-bucket ACID transakce",
+            "description": "Optimistické zamykání na základě verzí s atomickým commitem a best-effort rollbackem napříč kolekcemi."
+          },
+          {
+            "title": "Wildcard Event Bus",
+            "description": "Odebírejte patterny jako bucket.*.deleted nebo bucket.users.* napříč celým storem."
+          }
+        ]
+      }
+    },
     "cta": {
       "title": "Začněte budovat reaktivní datové vrstvy",
       "subtitle": "Přidejte noex-store do svého projektu během vteřin",
@@ -415,6 +502,120 @@
       "iot": {
         "title": "IoT zpracování událostí",
         "description": "Monitorujte proudy dat ze senzorů, detekujte překročení prahových hodnot a korelujte události napříč zařízeními."
+      }
+    },
+    "comparison": {
+      "title": "Srovnání",
+      "subtitle": "noex-rules vs populární JavaScriptové rule enginy",
+      "noexRules": "noex-rules",
+      "competitors": ["json-rules-engine", "nools", "node-rules", "rools", "zen-engine"],
+      "features": [
+        {
+          "label": "Forward chaining",
+          "noex": "Ano",
+          "others": ["Ano", "Ano (Rete)", "Ano", "Ano", "Decision tables"]
+        },
+        {
+          "label": "CEP / Temporální vzory",
+          "noex": "Sekvence, absence, počet, agregace",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "DSL",
+          "noex": "Fluent + templates",
+          "others": ["Pouze JSON", "Vlastní DSL", "Pouze JSON", "Plain objects", "DMN / FEEL"]
+        },
+        {
+          "label": "YAML definice pravidel",
+          "values": [true, false, false, false, false, false]
+        },
+        {
+          "label": "Fact Store s pattern matchingem",
+          "noex": "Vestavěné wildcards",
+          "others": ["Almanac", "Working memory", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Správa timerů",
+          "noex": "Vestavěné DSL",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Korelace událostí",
+          "noex": "Korelační + kauzační ID",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Wildcard subskripce událostí",
+          "noex": "Topic patterny",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "REST API",
+          "noex": "Vestavěné (Fastify)",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "SSE + Webhooky",
+          "values": [true, false, false, false, false, false]
+        },
+        {
+          "label": "String interpolace",
+          "noex": "${expression}",
+          "others": ["\u2014", "JS v DSL", "\u2014", "\u2014", "FEEL výrazy"]
+        },
+        {
+          "label": "Volání externích služeb",
+          "noex": "call_service akce",
+          "others": ["Custom operators", "Custom functions", "Custom handlers", "\u2014", "Custom nodes"]
+        },
+        {
+          "label": "OTP supervision",
+          "noex": "noex GenServer",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Prioritní vyhodnocování",
+          "noex": "Ano",
+          "others": ["Ano", "Salience", "Ano", "Ano", "Row order"]
+        },
+        {
+          "label": "OpenAPI / Swagger",
+          "values": [true, false, false, false, false, false]
+        },
+        {
+          "label": "Stav",
+          "noex": "Aktivní",
+          "others": ["Aktivní", "Archivovaný", "Nízká aktivita", "Aktivní", "Aktivní"]
+        }
+      ],
+      "differentiators": {
+        "title": "Čím je noex-rules unikátní",
+        "items": [
+          {
+            "title": "Complex Event Processing",
+            "description": "Jediný JS rule engine s vestavěným CEP: detekce sekvencí, monitorování absencí, počítání frekvencí a agregační prahy s časovými okny."
+          },
+          {
+            "title": "Tři DSL flavory",
+            "description": "Fluent builder s TypeScript autocomplete, tagged template literals pro rychlé prototypování a YAML pro konfigurační workflow."
+          },
+          {
+            "title": "Integrovaný Fact Store",
+            "description": "Wildcard pattern dotazy s automatickým přehodnocováním pravidel při změnách faktů. Žádná separátní správa stavu."
+          },
+          {
+            "title": "Vestavěná správa timerů",
+            "description": "Deklarativní timery s čitelným formátem doby trvání, intervaly opakování a automatickou emisí událostí při vypršení."
+          },
+          {
+            "title": "Produkční REST API",
+            "description": "Fastify HTTP vrstva s SSE streamováním, HMAC-podepsanými webhooky a Swagger dokumentací přímo z balíčku."
+          },
+          {
+            "title": "OTP Supervision",
+            "description": "Postavený na noex GenServer aktorech. Pokud engine spadne, supervisor ho restartuje, zatímco zbytek aplikace pokračuje."
+          }
+        ]
       }
     },
     "cta": {
