@@ -257,5 +257,76 @@
     "description": "Líbí se vám noex? Pomozte nám pokračovat ve vývoji",
     "btc": "Bitcoin",
     "btcCopied": "Adresa zkopírována!"
+  },
+  "storePage": {
+    "meta": {
+      "title": "noex-store - Reaktivní store se schématem pro Node.js",
+      "description": "In-memory store s validací schématu, reaktivními dotazy, ACID transakcemi a pluggable perzistencí. Postavený na noex GenServer primitivech."
+    },
+    "hero": {
+      "headline": "Reaktivní store se schématem",
+      "subheadline": "In-memory store s automatickou validací schématu, reaktivními dotazy ve stylu Convex, ACID transakcemi a pluggable perzistencí. Postavený na noex GenServer primitivech pro odolnou správu dat.",
+      "install": "npm install @hamicek/noex-store",
+      "github": "Zobrazit na GitHubu"
+    },
+    "features": {
+      "title": "Klíčové vlastnosti",
+      "subtitle": "Vše potřebné pro reaktivní správu dat v Node.js",
+      "schema": {
+        "title": "Schéma a validace",
+        "description": "Definujte typovaná schémata bucketů s omezením, automaticky generovanými poli, unikátními indexy a formátovými validátory. Záznamy se validují automaticky při každém zápisu."
+      },
+      "reactiveQueries": {
+        "title": "Reaktivní dotazy",
+        "description": "Sledování závislostí ve stylu Convex automaticky přepočítává dotazy při změně podkladových dat. Granularita na úrovni záznamu i bucketu s deep-equality porovnáním."
+      },
+      "transactions": {
+        "title": "ACID transakce",
+        "description": "Atomické zápisy přes více bucketů s optimistickým zamykáním. Čtení vlastních zápisů v rámci transakce, automatický rollback při konfliktu a události publikovány až po commitu."
+      },
+      "persistence": {
+        "title": "Pluggable perzistence",
+        "description": "Přepínejte mezi File, SQLite nebo Memory adaptéry. Debounced batching udržuje zápisy efektivní. Opt-out per bucket pro efemérní data."
+      },
+      "ttl": {
+        "title": "TTL a limity velikosti",
+        "description": "Per-record TTL s čitelným formátem doby trvání a automatickým mazáním. Evikce při překročení maximální velikosti bucketu odstraní nejstarší záznamy."
+      },
+      "events": {
+        "title": "Event systém",
+        "description": "Wildcard pub/sub na mutacích bucketů. Odebírejte konkrétní buckety, typy událostí nebo všechny změny jedním patternem. Pod kapotou pohání reaktivní dotazy i perzistenci."
+      }
+    },
+    "architecture": {
+      "title": "Supervision architektura",
+      "subtitle": "Jeden GenServer na bucket, supervisovaný strategií one-for-one. Pokud bucket spadne, ostatní běží dál.",
+      "store": "Store",
+      "supervisor": "Supervisor (one_for_one)",
+      "bucketServer": "BucketServer",
+      "queryManager": "QueryManager",
+      "eventBus": "EventBus",
+      "ttlManager": "TtlManager",
+      "persistence": "Persistence",
+      "bucketIsolation": "Každý bucket běží ve vlastním GenServeru — plná izolace procesů, sekvenční zpracování zpráv, žádné race conditions.",
+      "reactiveLayer": "QueryManager odebírá EventBus pro notifikace o změnách. Persistence debouncuje zápisy přes EventBus. Veškerá koordinace je event-driven."
+    },
+    "codeExamples": {
+      "title": "Podívejte se v akci",
+      "subtitle": "Reálné ukázky kódu: definice schématu, reaktivní dotazy a transakce",
+      "tabs": {
+        "schema": "Schéma a CRUD",
+        "queries": "Reaktivní dotazy",
+        "transactions": "Transakce"
+      }
+    },
+    "cta": {
+      "title": "Začněte budovat reaktivní datové vrstvy",
+      "subtitle": "Přidejte noex-store do svého projektu během vteřin",
+      "install": "npm install @hamicek/noex-store",
+      "copied": "Zkopírováno!",
+      "github": "Hvězda na GitHubu",
+      "docs": "Přečíst dokumentaci",
+      "backToNoex": "Zpět na noex"
+    }
   }
 }

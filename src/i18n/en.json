@@ -257,5 +257,76 @@
     "description": "Love noex? Help us keep building amazing tools",
     "btc": "Bitcoin",
     "btcCopied": "Address copied!"
+  },
+  "storePage": {
+    "meta": {
+      "title": "noex-store - Schema-driven Reactive Store for Node.js",
+      "description": "In-memory store with schema validation, reactive queries, ACID transactions, and pluggable persistence. Built on noex GenServer primitives."
+    },
+    "hero": {
+      "headline": "Schema-driven Reactive Store",
+      "subheadline": "In-memory store with automatic schema validation, Convex-style reactive queries, ACID transactions, and pluggable persistence. Built on noex GenServer primitives for fault-tolerant data management.",
+      "install": "npm install @hamicek/noex-store",
+      "github": "View on GitHub"
+    },
+    "features": {
+      "title": "Key Features",
+      "subtitle": "Everything you need for reactive data management in Node.js",
+      "schema": {
+        "title": "Schema & Validation",
+        "description": "Define typed bucket schemas with constraints, auto-generated fields, unique indexes, and format validators. Records are validated automatically on every write."
+      },
+      "reactiveQueries": {
+        "title": "Reactive Queries",
+        "description": "Convex-style dependency tracking re-evaluates queries automatically when underlying data changes. Record-level and bucket-level granularity with deep-equality diffing."
+      },
+      "transactions": {
+        "title": "ACID Transactions",
+        "description": "Atomic multi-bucket writes with optimistic locking. Read-your-own-writes within a transaction, automatic rollback on conflict, and events published only after commit."
+      },
+      "persistence": {
+        "title": "Pluggable Persistence",
+        "description": "Swap between File, SQLite, or Memory adapters. Debounced batching keeps writes efficient. Per-bucket opt-out for ephemeral data."
+      },
+      "ttl": {
+        "title": "TTL & Size Limits",
+        "description": "Per-record TTL with human-readable durations and automatic purging. Max-size eviction removes oldest records when a bucket exceeds capacity."
+      },
+      "events": {
+        "title": "Event System",
+        "description": "Wildcard pub/sub on bucket mutations. Subscribe to specific buckets, event types, or all changes with a single pattern. Powers reactive queries and persistence under the hood."
+      }
+    },
+    "architecture": {
+      "title": "Supervision Architecture",
+      "subtitle": "One GenServer per bucket, supervised with one-for-one strategy. If a bucket crashes, others keep running.",
+      "store": "Store",
+      "supervisor": "Supervisor (one_for_one)",
+      "bucketServer": "BucketServer",
+      "queryManager": "QueryManager",
+      "eventBus": "EventBus",
+      "ttlManager": "TtlManager",
+      "persistence": "Persistence",
+      "bucketIsolation": "Each bucket runs in its own GenServer — full process isolation, sequential message processing, no race conditions.",
+      "reactiveLayer": "QueryManager subscribes to EventBus for change notifications. Persistence debounces writes via EventBus. All coordination is event-driven."
+    },
+    "codeExamples": {
+      "title": "See It in Action",
+      "subtitle": "Real code examples showing schema definition, reactive queries, and transactions",
+      "tabs": {
+        "schema": "Schema & CRUD",
+        "queries": "Reactive Queries",
+        "transactions": "Transactions"
+      }
+    },
+    "cta": {
+      "title": "Start building reactive data layers",
+      "subtitle": "Add noex-store to your project in seconds",
+      "install": "npm install @hamicek/noex-store",
+      "copied": "Copied!",
+      "github": "Star on GitHub",
+      "docs": "Read the Docs",
+      "backToNoex": "Back to noex"
+    }
   }
 }
