@@ -1,7 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import LanguageSwitcher from './LanguageSwitcher.svelte';
-  import type { Locale } from '../../i18n/utils';
+  import { defaultLocale, type Locale } from '../../i18n/utils';
+
+  type Page = 'home' | 'store' | 'rules';
 
   interface NavTranslations {
     features: string;
@@ -13,6 +15,8 @@
     observability: string;
     distribution: string;
     cta: string;
+    store: string;
+    rules: string;
     openMenu: string;
     closeMenu: string;
   }
@@ -26,6 +30,7 @@
       currentLang: string;
     };
     githubUrl?: string;
+    page?: Page;
   }
 
   let {
@@ -34,27 +39,43 @@
     translations,
     langSwitcherTranslations,
     githubUrl = 'https://github.com/hamicek/noex',
+    page = 'home',
   }: Props = $props();
 
   let isMenuOpen = $state(false);
   let isScrolled = $state(false);
   let navRef: HTMLElement | null = $state(null);
 
-  // Navigation sections with their IDs and translation keys
-  const sections = [
-    { id: 'hero', key: 'hero' as const },
-    { id: 'why-noex', key: 'problem' as const },
-    { id: 'features', key: 'features' as const },
-    { id: 'services', key: 'services' as const },
-    { id: 'observability', key: 'observability' as const },
-    { id: 'distribution', key: 'distribution' as const },
-    { id: 'playground', key: 'playground' as const },
-    { id: 'cta', key: 'cta' as const },
+  // Locale-aware path prefix
+  const localePath = locale === defaultLocale ? '' : `/${locale}`;
+  const homePath = `${localePath}/`;
+
+  // Cross-page navigation links
+  const pageLinks: Array<{ key: 'store' | 'rules'; href: string; target: Page }> = [
+    { key: 'store', href: `${localePath}/store/`, target: 'store' },
+    { key: 'rules', href: `${localePath}/rules/`, target: 'rules' },
   ];
+
+  // Page-specific section navigation
+  const pageSections: Record<Page, Array<{ id: string; key: keyof NavTranslations }>> = {
+    home: [
+      { id: 'hero', key: 'hero' },
+      { id: 'why-noex', key: 'problem' },
+      { id: 'features', key: 'features' },
+      { id: 'services', key: 'services' },
+      { id: 'observability', key: 'observability' },
+      { id: 'distribution', key: 'distribution' },
+      { id: 'playground', key: 'playground' },
+      { id: 'cta', key: 'cta' },
+    ],
+    store: [],
+    rules: [],
+  };
+
+  const sections = pageSections[page];
 
   function toggleMenu() {
     isMenuOpen = !isMenuOpen;
-    // Prevent body scroll when menu is open
     if (typeof document !== 'undefined') {
       document.body.style.overflow = isMenuOpen ? 'hidden' : '';
     }
@@ -92,6 +113,13 @@
       }, 1000);
 
       closeMenu();
+    }
+  }
+
+  function handleLogoClick(event: MouseEvent) {
+    if (page === 'home') {
+      event.preventDefault();
+      scrollToSection('hero');
     }
   }
 
@@ -135,24 +163,41 @@
   <div class="nav-inner">
     <!-- Logo -->
     <a
-      href={`/${locale}/`}
+      href={homePath}
       class="logo"
-      onclick={() => scrollToSection('hero')}
+      onclick={handleLogoClick}
     >
       <span class="logo-text">noex</span>
     </a>
 
     <!-- Desktop Navigation -->
     <div class="desktop-nav" role="menubar">
-      {#each sections.slice(0, 4) as section}
-        <button
-          class="nav-link"
+      <!-- Page links -->
+      {#each pageLinks as link}
+        <a
+          href={link.href}
+          class="nav-link page-link"
+          class:active={page === link.target}
           role="menuitem"
-          onclick={() => scrollToSection(section.id)}
         >
-          {translations[section.key]}
-        </button>
+          {translations[link.key]}
+        </a>
       {/each}
+
+      <!-- Section links (skip hero, show up to 3) -->
+      {#if sections.length > 1}
+        <span class="nav-separator" aria-hidden="true"></span>
+        {#each sections.slice(1, 4) as section}
+          <button
+            class="nav-link"
+            role="menuitem"
+            onclick={() => scrollToSection(section.id)}
+          >
+            {translations[section.key]}
+          </button>
+        {/each}
+      {/if}
+
       <a
         href={githubUrl}
         target="_blank"
@@ -215,19 +260,37 @@
     aria-hidden={!isMenuOpen}
   >
     <div class="mobile-menu-content">
-      <!-- Section Links -->
-      <div class="mobile-sections">
-        {#each sections as section}
-          <button
-            class="mobile-nav-link"
+      <!-- Page Links -->
+      <div class="mobile-pages">
+        {#each pageLinks as link}
+          <a
+            href={link.href}
+            class="mobile-nav-link page-link"
+            class:active={page === link.target}
             role="menuitem"
             tabindex={isMenuOpen ? 0 : -1}
-            onclick={() => scrollToSection(section.id)}
           >
-            {translations[section.key]}
-          </button>
+            {translations[link.key]}
+          </a>
         {/each}
       </div>
+
+      <!-- Section Links -->
+      {#if sections.length > 0}
+        <div class="mobile-divider"></div>
+        <div class="mobile-sections">
+          {#each sections as section}
+            <button
+              class="mobile-nav-link"
+              role="menuitem"
+              tabindex={isMenuOpen ? 0 : -1}
+              onclick={() => scrollToSection(section.id)}
+            >
+              {translations[section.key]}
+            </button>
+          {/each}
+        </div>
+      {/if}
 
       <!-- Divider -->
       <div class="mobile-divider"></div>
@@ -369,6 +432,24 @@
     outline-offset: 2px;
   }
 
+  /* Page links — slightly more prominent */
+  .nav-link.page-link {
+    font-weight: 600;
+  }
+
+  .nav-link.page-link.active {
+    color: var(--color-accent-primary);
+  }
+
+  /* Separator between page links and section links */
+  .nav-separator {
+    width: 1px;
+    height: 1rem;
+    background: var(--color-border);
+    margin: 0 0.25rem;
+    flex-shrink: 0;
+  }
+
   .external-icon {
     opacity: 0.7;
     transition: opacity 0.15s ease;
@@ -508,6 +589,12 @@
     min-height: 100%;
   }
 
+  .mobile-pages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
   .mobile-sections {
     display: flex;
     flex-direction: column;
@@ -540,6 +627,15 @@
   .mobile-nav-link:focus-visible {
     outline: 2px solid var(--color-accent-primary);
     outline-offset: -2px;
+  }
+
+  .mobile-nav-link.page-link {
+    font-weight: 600;
+  }
+
+  .mobile-nav-link.page-link.active {
+    color: var(--color-accent-primary);
+    background: rgba(0, 255, 136, 0.05);
   }
 
   .mobile-nav-link.external {

@@ -6,9 +6,10 @@ import Navigation from '../components/ui/Navigation.svelte';
 interface Props {
   locale: Locale;
   currentPath?: string;
+  page?: 'home' | 'store' | 'rules';
 }
 
-const { locale, currentPath = '/' } = Astro.props;
+const { locale, currentPath = '/', page = 'home' } = Astro.props;
 const t = useTranslations(locale);
 
 // Site configuration
@@ -27,6 +28,8 @@ const navTranslations = {
   observability: t('nav.observability'),
   distribution: t('nav.distribution'),
   cta: t('nav.cta'),
+  store: t('nav.store'),
+  rules: t('nav.rules'),
   openMenu: t('nav.openMenu'),
   closeMenu: t('nav.closeMenu'),
 };
@@ -134,6 +137,7 @@ const structuredData = {
       {currentPath}
       translations={navTranslations}
       langSwitcherTranslations={langSwitcherTranslations}
+      {page}
       client:load
     />
 
