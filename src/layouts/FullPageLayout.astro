@@ -23,6 +23,9 @@ const ogImageUrl = `${siteUrl}/og-image.png`;
 const pageTitle = title ?? t('meta.title');
 const pageDescription = description ?? t('meta.description');
 
+// Package name per page (for JSON-LD and OG tags)
+const packageName = ({ home: 'noex', store: 'noex-store', rules: 'noex-rules' } as const)[page];
+
 // Navigation translations
 const navTranslations = {
   features: t('nav.features'),
@@ -49,11 +52,11 @@ const langSwitcherTranslations = {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "noex",
+  "name": packageName,
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Node.js",
   "description": pageDescription,
-  "url": siteUrl,
+  "url": currentUrl,
   "author": {
     "@type": "Organization",
     "name": "noex"
@@ -104,7 +107,7 @@ const structuredData = {
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="noex - Erlang/OTP Patterns for Node.js" />
+    <meta property="og:image:alt" content={pageTitle} />
     <meta property="og:site_name" content="noex" />
     <meta property="og:locale" content={locale === 'cs' ? 'cs_CZ' : 'en_US'} />
 
@@ -114,7 +117,7 @@ const structuredData = {
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={ogImageUrl} />
-    <meta name="twitter:image:alt" content="noex - Erlang/OTP Patterns for Node.js" />
+    <meta name="twitter:image:alt" content={pageTitle} />
 
     <!-- Favicon & Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
