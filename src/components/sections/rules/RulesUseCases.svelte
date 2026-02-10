@@ -57,7 +57,7 @@
     .groupBy('userId'))
   .then(emit('security.alert', {
     type: 'brute-force',
-    userId: ref('groupKey'),
+    userId: ref('trigger.groupKey'),
   }))
   .build();`,
     payment: `Rule.create('payment-timeout')
@@ -67,7 +67,7 @@
     .within('15m')
     .groupBy('orderId'))
   .then(emit('order.cancel', {
-    orderId: ref('groupKey'),
+    orderId: ref('trigger.groupKey'),
     reason: 'Payment timeout',
   }))
   .build();`,
@@ -80,7 +80,7 @@
     .window('30d')
     .groupBy('customerId'))
   .then(setFact(
-    'customer:\${groupKey}:tier', 'gold'
+    'customer:\${trigger.groupKey}:tier', 'gold'
   ))
   .build();`,
     iot: `Rule.create('device-overheat')
@@ -90,7 +90,7 @@
     .within('10m')
     .groupBy('deviceId'))
   .then(emit('alert.overheat', {
-    deviceId: ref('groupKey'),
+    deviceId: ref('trigger.groupKey'),
     severity: 'critical',
   }))
   .build();`,
