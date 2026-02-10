@@ -103,7 +103,7 @@ console.log(\`Server listening on port \${server.port}\`);`,
       code: `// Subscribe to a reactive query
 \u2192 { "id": 5, "type": "store.subscribe", "query": "activeUsers" }
 \u2190 { "id": 5, "type": "result",
-    "data": { "subscriptionId": "sub_1", "initialData": [...] } }
+    "data": { "subscriptionId": "sub_1", "data": [...] } }
 
 // Server pushes updates when data changes
 \u2190 { "type": "push", "channel": "subscription",
@@ -118,7 +118,7 @@ console.log(\`Server listening on port \${server.port}\`);`,
 // Server pushes rule events
 \u2190 { "type": "push", "channel": "event",
     "subscriptionId": "sub_2",
-    "data": { "topic": "user.login", "data": { "userId": "abc" } } }
+    "data": { "topic": "user.login", "event": { "data": { "userId": "abc" } } } }
 
 // Unsubscribe
 \u2192 { "id": 7, "type": "store.unsubscribe",
@@ -140,12 +140,11 @@ console.log(\`Server listening on port \${server.port}\`);`,
 
 // All operations succeed or all are rolled back
 \u2190 { "id": 8, "type": "result", "data": {
-    "committed": true,
     "results": [
-      { "id": "alice", "balance": 1000 },
-      { "id": "bob", "balance": 1000 },
-      { "id": "alice", "balance": 900 },
-      { "id": "bob", "balance": 1100 }
+      { "index": 0, "data": { "id": "alice", "balance": 1000 } },
+      { "index": 1, "data": { "id": "bob", "balance": 1000 } },
+      { "index": 2, "data": { "id": "alice", "balance": 900 } },
+      { "index": 3, "data": { "id": "bob", "balance": 1100 } }
     ]
   }
 }

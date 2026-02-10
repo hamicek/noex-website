@@ -131,8 +131,8 @@
           {#each Object.entries(messageExamples) as [key, example]}
             <div class="message-example">
               <div class="message-label">
-                <span class="message-direction" class:outgoing={key === 'request' || key === 'heartbeat'}>
-                  {key === 'request' || key === 'heartbeat' ? 'Client \u2192' : '\u2190 Server'}
+                <span class="message-direction" class:outgoing={key === 'request'}>
+                  {key === 'request' ? 'Client \u2192' : '\u2190 Server'}
                 </span>
                 <span class="message-type-name">
                   {translations.messageTypes[key as keyof typeof translations.messageTypes]}
