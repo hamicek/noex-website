@@ -42,7 +42,7 @@
   const codeExamples: Record<string, { code: string; filename: string }> = {
     schema: {
       filename: 'schema.ts',
-      code: `import { Store } from '@hamicek/noex-store';
+      code: `${'import'} { Store } from '@hamicek/noex-store';
 
 const store = await Store.start();
 

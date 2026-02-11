@@ -42,7 +42,7 @@
   const codeExamples: Record<string, { code: string; filename: string }> = {
     fluent: {
       filename: 'rules.ts',
-      code: `import { Rule, onEvent, event, emit, setFact, ref }
+      code: `${'import'} { Rule, onEvent, event, emit, setFact, ref }
   from '@hamicek/noex-rules/dsl';
 
 const rule = Rule.create('order-notification')
@@ -63,7 +63,7 @@ const rule = Rule.create('order-notification')
     },
     template: {
       filename: 'rules.ts',
-      code: `import { rule } from '@hamicek/noex-rules/dsl';
+      code: `${'import'} { rule } from '@hamicek/noex-rules/dsl';
 
 const orderNotification = rule\`
   rule "order-notification"

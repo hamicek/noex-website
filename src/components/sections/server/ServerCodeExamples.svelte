@@ -43,9 +43,9 @@
   const codeExamples: Record<string, { code: string; filename: string }> = {
     startup: {
       filename: 'server.ts',
-      code: `import { NoexServer } from '@hamicek/noex-server';
-import { Store } from '@hamicek/noex-store';
-import { RuleEngine } from '@hamicek/noex-rules';
+      code: `${'import'} { NoexServer } from '@hamicek/noex-server';
+${'import'} { Store } from '@hamicek/noex-store';
+${'import'} { RuleEngine } from '@hamicek/noex-rules';
 
 const store = await Store.start();
 await store.defineBucket('users', {

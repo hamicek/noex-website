@@ -44,7 +44,7 @@
   const codeExamples: Record<string, { code: string; filename: string }> = {
     connection: {
       filename: 'client.ts',
-      code: `import { NoexClient } from '@hamicek/noex-client';
+      code: `${'import'} { NoexClient } from '@hamicek/noex-client';
 
 const client = new NoexClient('ws://localhost:8080', {
   auth: { token: 'my-secret-token' },
