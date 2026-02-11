@@ -3,7 +3,7 @@
   import LanguageSwitcher from './LanguageSwitcher.svelte';
   import { defaultLocale, type Locale } from '../../i18n/utils';
 
-  type Page = 'home' | 'store' | 'rules' | 'server';
+  type Page = 'home' | 'store' | 'rules' | 'server' | 'client';
 
   interface NavTranslations {
     features: string;
@@ -18,6 +18,7 @@
     store: string;
     rules: string;
     server: string;
+    client: string;
     openMenu: string;
     closeMenu: string;
   }
@@ -52,10 +53,11 @@
   const homePath = `${localePath}/`;
 
   // Cross-page navigation links
-  const pageLinks: Array<{ key: 'store' | 'rules' | 'server'; href: string; target: Page }> = [
+  const pageLinks: Array<{ key: 'store' | 'rules' | 'server' | 'client'; href: string; target: Page }> = [
     { key: 'store', href: `${localePath}/store/`, target: 'store' },
     { key: 'rules', href: `${localePath}/rules/`, target: 'rules' },
     { key: 'server', href: `${localePath}/server/`, target: 'server' },
+    { key: 'client', href: `${localePath}/client/`, target: 'client' },
   ];
 
   // Page-specific section navigation
@@ -73,6 +75,7 @@
     store: [],
     rules: [],
     server: [],
+    client: [],
   };
 
   const sections = pageSections[page];

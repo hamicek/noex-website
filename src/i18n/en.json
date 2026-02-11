@@ -17,6 +17,7 @@
     "store": "Store",
     "rules": "Rules",
     "server": "Server",
+    "client": "Client",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },

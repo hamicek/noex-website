@@ -6,7 +6,7 @@ import Navigation from '../components/ui/Navigation.svelte';
 interface Props {
   locale: Locale;
   currentPath?: string;
-  page?: 'home' | 'store' | 'rules' | 'server';
+  page?: 'home' | 'store' | 'rules' | 'server' | 'client';
   title?: string;
   description?: string;
 }
@@ -24,7 +24,7 @@ const pageTitle = title ?? t('meta.title');
 const pageDescription = description ?? t('meta.description');
 
 // Package name per page (for JSON-LD and OG tags)
-const packageName = ({ home: 'noex', store: 'noex-store', rules: 'noex-rules', server: 'noex-server' } as const)[page];
+const packageName = ({ home: 'noex', store: 'noex-store', rules: 'noex-rules', server: 'noex-server', client: 'noex-client' } as const)[page];
 
 // Navigation translations
 const navTranslations = {
@@ -40,6 +40,7 @@ const navTranslations = {
   store: t('nav.store'),
   rules: t('nav.rules'),
   server: t('nav.server'),
+  client: t('nav.client'),
   openMenu: t('nav.openMenu'),
   closeMenu: t('nav.closeMenu'),
 };
