@@ -828,5 +828,204 @@
       "docs": "Přečíst dokumentaci",
       "backToNoex": "Zpět na noex"
     }
+  },
+  "clientPage": {
+    "meta": {
+      "title": "noex-client - Typově bezpečné klientské SDK pro noex Server",
+      "description": "Typově bezpečný WebSocket klient s automatickým reconnectem, reaktivními subskripcemi, ACID transakcemi a proxy pro rules engine. Nulové runtime závislosti."
+    },
+    "hero": {
+      "headline": "Typově bezpečné klientské SDK",
+      "subheadline": "Plně typovaný WebSocket klient pro noex-server s automatickým reconnectem, obnovou subskripcí, reaktivními store dotazy, proxy pro rules engine a nulovými runtime závislostmi.",
+      "install": "npm install @hamicek/noex-client",
+      "github": "Zobrazit na GitHubu"
+    },
+    "features": {
+      "title": "Klíčové vlastnosti",
+      "subtitle": "Vše potřebné pro typově bezpečnou real-time komunikaci s noex-serverem",
+      "typeSafe": {
+        "title": "Typově bezpečné Bucket API",
+        "description": "Generické BucketAPI<T> s plným TypeScript typováním. CRUD operace, dotazy, paginace a agregace — vše s typovou kontrolou při kompilaci."
+      },
+      "reconnect": {
+        "title": "Automatický Reconnect",
+        "description": "Exponenciální backoff s jitterem, konfigurovatelné parametry (maxRetries, delays, multiplier). Bezešvé znovupřipojení bez manuálního zásahu."
+      },
+      "subscriptionRecovery": {
+        "title": "Obnova subskripcí",
+        "description": "Po reconnectu jsou automaticky obnoveny všechny store i rules subskripce a doručena čerstvá data. Žádná manuální resubskripce není potřeba."
+      },
+      "reactiveSubscriptions": {
+        "title": "Reaktivní subskripce",
+        "description": "Real-time push notifikace pro store dotazy a rules události. Iniciální data doručena ihned po subskripci, poté živé aktualizace při každé změně."
+      },
+      "transactions": {
+        "title": "Transakce",
+        "description": "ACID multi-bucket transakce přes WebSocket. Atomické operace s optimistickým zamykáním, čtení vlastních zápisů a automatický rollback při konfliktu."
+      },
+      "rulesProxy": {
+        "title": "Rules Engine Proxy",
+        "description": "Emise událostí, správa faktů (set/get/delete/query) a subskripce pattern-based proudů událostí — vše přes stejné WebSocket spojení."
+      },
+      "auth": {
+        "title": "Autentizace",
+        "description": "Login, logout a správa sessions přes token-based auth. Auto-login při připojení i reconnectu, pokud je auth token poskytnut."
+      },
+      "zeroDeps": {
+        "title": "Nulové závislosti",
+        "description": "Žádné runtime závislosti. Funguje nativně v prohlížeči a v Node.js s balíčkem ws. Minimální velikost bundlu."
+      }
+    },
+    "architecture": {
+      "title": "Vrstvená architektura",
+      "subtitle": "Čistá separace zodpovědností se čtyřmi odlišnými vrstvami",
+      "layers": {
+        "api": "API vrstva",
+        "apiDesc": "StoreAPI, RulesAPI, AuthAPI",
+        "subscription": "Subscription Manager",
+        "subscriptionDesc": "Registr, doručování push, resubskripce",
+        "protocol": "Protocol vrstva",
+        "protocolDesc": "RequestManager + PushRouter",
+        "transport": "Transport vrstva",
+        "transportDesc": "WebSocket, heartbeat, reconnect"
+      },
+      "stateMachine": "Stavový automat spojení",
+      "states": {
+        "disconnected": "disconnected",
+        "connecting": "connecting",
+        "connected": "connected",
+        "reconnecting": "reconnecting"
+      },
+      "lifecycleEvents": "Lifecycle události: connected, disconnected, reconnecting, reconnected, error, welcome",
+      "requestPipeline": "Request pipeline: API volání → RequestManager (korelace ID + timeout) → Transport (WebSocket send) → Směrování odpovědi"
+    },
+    "codeExamples": {
+      "title": "Podívejte se v akci",
+      "subtitle": "Reálné ukázky kódu: připojení, CRUD, subskripce, transakce a rules",
+      "tabs": {
+        "connection": "Připojení",
+        "crud": "CRUD operace",
+        "subscriptions": "Subskripce",
+        "transactions": "Transakce",
+        "rules": "Rules"
+      }
+    },
+    "reconnect": {
+      "title": "Chování reconnectu",
+      "subtitle": "Automatické znovupřipojení s exponenciálním backoffem, jitterem a plnou obnovou subskripcí",
+      "backoffTitle": "Exponenciální Backoff",
+      "attempts": [
+        { "attempt": 1, "delay": "~1s", "formula": "1000ms + jitter" },
+        { "attempt": 2, "delay": "~2s", "formula": "2000ms + jitter" },
+        { "attempt": 3, "delay": "~4s", "formula": "4000ms + jitter" },
+        { "attempt": 4, "delay": "~8s", "formula": "8000ms + jitter" },
+        { "attempt": 5, "delay": "~16s", "formula": "16000ms + jitter" },
+        { "attempt": "N", "delay": "max 30s", "formula": "omezeno na maxDelayMs" }
+      ],
+      "configTitle": "Konfigurace",
+      "configParams": [
+        { "name": "maxRetries", "default": "Infinity", "description": "Maximální počet pokusů o reconnect" },
+        { "name": "initialDelayMs", "default": "1000", "description": "Základní prodleva před prvním opakováním" },
+        { "name": "maxDelayMs", "default": "30000", "description": "Maximální prodleva" },
+        { "name": "backoffMultiplier", "default": "2", "description": "Exponenciální násobitel" },
+        { "name": "jitterMs", "default": "500", "description": "Náhodný jitter přidaný k prodlevě" }
+      ],
+      "recoveryTitle": "Flow obnovy subskripcí",
+      "recoverySteps": ["Reconnect", "Re-autentizace", "Resubskripce všeho", "Doručení čerstvých dat"],
+      "disableNote": "Vypnutí reconnectu: reconnect: false"
+    },
+    "comparison": {
+      "title": "Srovnání",
+      "subtitle": "noex-client vs populární real-time klientská SDK",
+      "noexClient": "noex-client",
+      "competitors": ["Socket.IO Client", "Supabase JS", "Firebase JS", "Ably Realtime"],
+      "features": [
+        {
+          "label": "Typově bezpečné generické API",
+          "noex": "BucketAPI<T>",
+          "others": ["\u2014", "Generované typy", "Netypované", "\u2014"]
+        },
+        {
+          "label": "Auto obnova subskripcí",
+          "values": [true, false, false, true, true]
+        },
+        {
+          "label": "ACID transakce",
+          "noex": "Multi-bucket přes WS",
+          "others": ["\u2014", "Postgres transakce", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Rules Engine Proxy",
+          "values": [true, false, false, false, false]
+        },
+        {
+          "label": "Reconnect s backoffem",
+          "values": [true, true, true, true, true]
+        },
+        {
+          "label": "Auto-login při reconnectu",
+          "values": [true, false, false, true, false]
+        },
+        {
+          "label": "Reaktivní query subskripce",
+          "noex": "Convex-style push",
+          "others": ["Manuální rooms", "Postgres změny", "Realtime sync", "Pub/sub"]
+        },
+        {
+          "label": "Správa faktů",
+          "noex": "Set/get/delete/query",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Runtime závislosti",
+          "noex": "Nulové",
+          "others": ["engine.io-client +", "Mnoho", "Mnoho", "Mnoho"]
+        },
+        {
+          "label": "Prohlížeč + Node.js",
+          "values": [true, true, true, true, true]
+        },
+        {
+          "label": "Stav",
+          "noex": "Aktivní",
+          "others": ["Aktivní", "Aktivní", "Aktivní", "Aktivní"]
+        }
+      ],
+      "differentiators": {
+        "title": "Čím je noex-client unikátní",
+        "items": [
+          {
+            "title": "Typově bezpečné generické API",
+            "description": "BucketAPI<T> poskytuje typovou kontrolu při kompilaci na každé CRUD operaci, dotazu a agregaci. Žádné runtime neshody typů."
+          },
+          {
+            "title": "Automatická obnova subskripcí",
+            "description": "Při reconnectu jsou automaticky obnoveny všechny aktivní store i rules subskripce. Čerstvá data jsou doručena bez jakékoli manuální logiky resubskripce."
+          },
+          {
+            "title": "Integrovaný Rules Engine",
+            "description": "Jediné klientské SDK s vestavěným přístupem k rules enginu. Emitujte události, spravujte fakta a odebírejte pattern-matched rule eventy přes stejné spojení."
+          },
+          {
+            "title": "ACID transakce přes WebSocket",
+            "description": "Multi-bucket atomické transakce s optimistickým zamykáním, odeslané jako jediná zpráva. Čtení vlastních zápisů a automatický rollback při konfliktu."
+          },
+          {
+            "title": "Nulové runtime závislosti",
+            "description": "Žádné tranzitivní závislosti k auditu nebo aktualizaci. Funguje nativně v prohlížečích a v Node.js jen s balíčkem ws jako peer dependency."
+          }
+        ]
+      }
+    },
+    "cta": {
+      "title": "Začněte budovat typově bezpečné real-time aplikace",
+      "subtitle": "Přidejte noex-client do svého projektu během vteřin",
+      "install": "npm install @hamicek/noex-client",
+      "copied": "Zkopírováno!",
+      "github": "Hvězda na GitHubu",
+      "docs": "Přečíst dokumentaci",
+      "backToNoex": "Zpět na noex",
+      "peerNote": "Vyžaduje běžící noex-server. V Node.js nainstalujte ws jako peer dependency."
+    }
   }
 }

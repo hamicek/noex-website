@@ -1,0 +1,37 @@
+---
+import FullPageLayout from '../../../layouts/FullPageLayout.astro';
+import { getTranslations } from '../../../i18n/utils';
+import ClientHero from '../../../components/sections/client/ClientHero.svelte';
+import ClientFeatures from '../../../components/sections/client/ClientFeatures.svelte';
+import ClientArchitecture from '../../../components/sections/client/ClientArchitecture.svelte';
+import ClientCodeExamples from '../../../components/sections/client/ClientCodeExamples.svelte';
+import ClientReconnect from '../../../components/sections/client/ClientReconnect.svelte';
+import ClientComparison from '../../../components/sections/client/ClientComparison.svelte';
+import ClientCallToAction from '../../../components/sections/client/ClientCallToAction.svelte';
+
+const locale = 'cs';
+const translations = getTranslations(locale);
+const client = translations.clientPage;
+---
+
+<FullPageLayout
+  locale={locale}
+  currentPath="/client/"
+  page="client"
+  title={client.meta.title}
+  description={client.meta.description}
+>
+  <ClientHero translations={client.hero} client:load />
+  <ClientFeatures translations={client.features} client:visible />
+  <ClientArchitecture translations={client.architecture} client:visible />
+  <ClientCodeExamples translations={client.codeExamples} client:visible />
+  <ClientReconnect translations={client.reconnect} client:visible />
+  <ClientComparison translations={client.comparison} client:visible />
+  <ClientCallToAction
+    translations={client.cta}
+    footerTranslations={translations.footer}
+    supportTranslations={translations.support}
+    locale={locale}
+    client:visible
+  />
+</FullPageLayout>

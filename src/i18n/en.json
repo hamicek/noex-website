@@ -828,5 +828,204 @@
       "docs": "Read the Docs",
       "backToNoex": "Back to noex"
     }
+  },
+  "clientPage": {
+    "meta": {
+      "title": "noex-client - Type-Safe Client SDK for noex Server",
+      "description": "Type-safe WebSocket client with automatic reconnect, reactive subscriptions, ACID transactions, and rules engine proxy. Zero runtime dependencies."
+    },
+    "hero": {
+      "headline": "Type-Safe Client SDK",
+      "subheadline": "Fully typed WebSocket client for noex-server with automatic reconnect, subscription recovery, reactive store queries, rules engine proxy, and zero runtime dependencies.",
+      "install": "npm install @hamicek/noex-client",
+      "github": "View on GitHub"
+    },
+    "features": {
+      "title": "Key Features",
+      "subtitle": "Everything you need for type-safe real-time communication with noex-server",
+      "typeSafe": {
+        "title": "Type-Safe Bucket API",
+        "description": "Generic BucketAPI<T> with full TypeScript typing. CRUD operations, queries, pagination, and aggregations — all with compile-time type safety."
+      },
+      "reconnect": {
+        "title": "Automatic Reconnect",
+        "description": "Exponential backoff with jitter, configurable parameters (maxRetries, delays, multiplier). Seamless reconnection without manual intervention."
+      },
+      "subscriptionRecovery": {
+        "title": "Subscription Recovery",
+        "description": "After reconnect, all store and rules subscriptions are automatically restored and fresh data is delivered. No manual resubscription needed."
+      },
+      "reactiveSubscriptions": {
+        "title": "Reactive Subscriptions",
+        "description": "Real-time push notifications for store queries and rules events. Initial data delivered immediately after subscription, then live updates on every change."
+      },
+      "transactions": {
+        "title": "Transactions",
+        "description": "ACID multi-bucket transactions over WebSocket. Atomic operations with optimistic locking, read-your-own-writes, and automatic rollback on conflict."
+      },
+      "rulesProxy": {
+        "title": "Rules Engine Proxy",
+        "description": "Emit events, manage facts (set/get/delete/query), and subscribe to pattern-based event streams — all through the same WebSocket connection."
+      },
+      "auth": {
+        "title": "Authentication",
+        "description": "Login, logout, and session management via token-based auth. Auto-login on connect and reconnect when auth token is provided."
+      },
+      "zeroDeps": {
+        "title": "Zero Dependencies",
+        "description": "No runtime dependencies. Works in browser natively and in Node.js with the ws package. Minimal bundle footprint."
+      }
+    },
+    "architecture": {
+      "title": "Layered Architecture",
+      "subtitle": "Clean separation of concerns with four distinct layers",
+      "layers": {
+        "api": "API Layer",
+        "apiDesc": "StoreAPI, RulesAPI, AuthAPI",
+        "subscription": "Subscription Manager",
+        "subscriptionDesc": "Registry, push delivery, resubscribe",
+        "protocol": "Protocol Layer",
+        "protocolDesc": "RequestManager + PushRouter",
+        "transport": "Transport Layer",
+        "transportDesc": "WebSocket, heartbeat, reconnect"
+      },
+      "stateMachine": "Connection State Machine",
+      "states": {
+        "disconnected": "disconnected",
+        "connecting": "connecting",
+        "connected": "connected",
+        "reconnecting": "reconnecting"
+      },
+      "lifecycleEvents": "Lifecycle events: connected, disconnected, reconnecting, reconnected, error, welcome",
+      "requestPipeline": "Request pipeline: API call → RequestManager (id correlation + timeout) → Transport (WebSocket send) → Response routing"
+    },
+    "codeExamples": {
+      "title": "See It in Action",
+      "subtitle": "Real code examples showing connection, CRUD, subscriptions, transactions, and rules",
+      "tabs": {
+        "connection": "Connection",
+        "crud": "CRUD Operations",
+        "subscriptions": "Subscriptions",
+        "transactions": "Transactions",
+        "rules": "Rules"
+      }
+    },
+    "reconnect": {
+      "title": "Reconnect Behavior",
+      "subtitle": "Automatic reconnection with exponential backoff, jitter, and full subscription recovery",
+      "backoffTitle": "Exponential Backoff",
+      "attempts": [
+        { "attempt": 1, "delay": "~1s", "formula": "1000ms + jitter" },
+        { "attempt": 2, "delay": "~2s", "formula": "2000ms + jitter" },
+        { "attempt": 3, "delay": "~4s", "formula": "4000ms + jitter" },
+        { "attempt": 4, "delay": "~8s", "formula": "8000ms + jitter" },
+        { "attempt": 5, "delay": "~16s", "formula": "16000ms + jitter" },
+        { "attempt": "N", "delay": "max 30s", "formula": "capped at maxDelayMs" }
+      ],
+      "configTitle": "Configuration",
+      "configParams": [
+        { "name": "maxRetries", "default": "Infinity", "description": "Maximum reconnect attempts" },
+        { "name": "initialDelayMs", "default": "1000", "description": "Base delay before first retry" },
+        { "name": "maxDelayMs", "default": "30000", "description": "Maximum delay cap" },
+        { "name": "backoffMultiplier", "default": "2", "description": "Exponential multiplier" },
+        { "name": "jitterMs", "default": "500", "description": "Random jitter added to delay" }
+      ],
+      "recoveryTitle": "Subscription Recovery Flow",
+      "recoverySteps": ["Reconnect", "Re-authenticate", "Resubscribe all", "Deliver fresh data"],
+      "disableNote": "Disable reconnect with reconnect: false"
+    },
+    "comparison": {
+      "title": "How It Compares",
+      "subtitle": "noex-client vs popular real-time client SDKs",
+      "noexClient": "noex-client",
+      "competitors": ["Socket.IO Client", "Supabase JS", "Firebase JS", "Ably Realtime"],
+      "features": [
+        {
+          "label": "Type-Safe Generic API",
+          "noex": "BucketAPI<T>",
+          "others": ["\u2014", "Generated types", "Untyped", "\u2014"]
+        },
+        {
+          "label": "Auto Subscription Recovery",
+          "values": [true, false, false, true, true]
+        },
+        {
+          "label": "ACID Transactions",
+          "noex": "Multi-bucket over WS",
+          "others": ["\u2014", "Postgres transactions", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Rules Engine Proxy",
+          "values": [true, false, false, false, false]
+        },
+        {
+          "label": "Reconnect with Backoff",
+          "values": [true, true, true, true, true]
+        },
+        {
+          "label": "Auto-login on Reconnect",
+          "values": [true, false, false, true, false]
+        },
+        {
+          "label": "Reactive Query Subscriptions",
+          "noex": "Convex-style push",
+          "others": ["Manual rooms", "Postgres changes", "Realtime sync", "Pub/sub"]
+        },
+        {
+          "label": "Facts Management",
+          "noex": "Set/get/delete/query",
+          "others": ["\u2014", "\u2014", "\u2014", "\u2014"]
+        },
+        {
+          "label": "Runtime Dependencies",
+          "noex": "Zero",
+          "others": ["engine.io-client +", "Multiple", "Multiple", "Multiple"]
+        },
+        {
+          "label": "Browser + Node.js",
+          "values": [true, true, true, true, true]
+        },
+        {
+          "label": "Status",
+          "noex": "Active",
+          "others": ["Active", "Active", "Active", "Active"]
+        }
+      ],
+      "differentiators": {
+        "title": "What Makes noex-client Unique",
+        "items": [
+          {
+            "title": "Type-Safe Generic API",
+            "description": "BucketAPI<T> gives you compile-time type safety on every CRUD operation, query, and aggregation. No more runtime type mismatches."
+          },
+          {
+            "title": "Automatic Subscription Recovery",
+            "description": "On reconnect, all active store and rules subscriptions are automatically restored. Fresh data is delivered without any manual resubscription logic."
+          },
+          {
+            "title": "Integrated Rules Engine",
+            "description": "The only client SDK with built-in rules engine access. Emit events, manage facts, and subscribe to pattern-matched rule events over the same connection."
+          },
+          {
+            "title": "ACID Transactions over WebSocket",
+            "description": "Multi-bucket atomic transactions with optimistic locking, sent as a single message. Read-your-own-writes and automatic rollback on conflict."
+          },
+          {
+            "title": "Zero Runtime Dependencies",
+            "description": "No transitive dependencies to audit or update. Works natively in browsers, and in Node.js with just the ws package as a peer dependency."
+          }
+        ]
+      }
+    },
+    "cta": {
+      "title": "Start building type-safe real-time apps",
+      "subtitle": "Add noex-client to your project in seconds",
+      "install": "npm install @hamicek/noex-client",
+      "copied": "Copied!",
+      "github": "Star on GitHub",
+      "docs": "Read the Docs",
+      "backToNoex": "Back to noex",
+      "peerNote": "Requires a running noex-server. In Node.js, install ws as a peer dependency."
+    }
   }
 }
