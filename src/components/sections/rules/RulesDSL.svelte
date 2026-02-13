@@ -103,17 +103,64 @@ const orderNotification = rule\`
   };
 
   function highlightCode(code: string): string {
-    return code
-      .replace(/(\/\/[^\n]*)/g, '<span class="hl-comment">$1</span>')
-      .replace(/(#[^\n]*)/g, '<span class="hl-comment">$1</span>')
-      .replace(/'([^']*?)'/g, '<span class="hl-string">\'$1\'</span>')
-      .replace(/"([^"]*?)"/g, '<span class="hl-string">"$1"</span>')
-      .replace(/\b(import|from|export|const|let|return|new|await|async|function|true|false)\b/g, '<span class="hl-keyword">$1</span>')
-      .replace(/\b(Rule|RuleEngine)\b/g, '<span class="hl-class">$1</span>')
-      .replace(/\b(\d+)\b/g, '<span class="hl-number">$1</span>')
-      .replace(/\b(create|description|priority|when|if|then|also|build|onEvent|event|emit|setFact|ref)\b(?=\s*[\(\<`])/g, '<span class="hl-method">$1</span>')
-      .replace(/^(\s*[\w-]+)(?=:)/gm, '<span class="hl-property">$1</span>')
-      .replace(/=&gt;/g, '<span class="hl-keyword">=&gt;</span>');
+    const keywords = new Set(['import', 'from', 'export', 'const', 'let', 'return', 'new', 'await', 'async', 'function', 'true', 'false']);
+    const types = new Set(['Rule', 'RuleEngine']);
+    const methods = new Set(['create', 'description', 'priority', 'when', 'if', 'then', 'also', 'build', 'onEvent', 'event', 'emit', 'setFact', 'ref']);
+
+    // For YAML: track line-start property pattern
+    const tokenRegex = /\/\/[^\n]*|#[^\n]*|`[^`]*`|'[^']*'|"[^"]*"|[a-zA-Z_$][\w$-]*|\d+|=>|./gs;
+    let result = '';
+    const tokens = code.match(tokenRegex);
+    if (!tokens) return escapeHtml(code);
+
+    // Track if we're at the start of a line for YAML property detection
+    let atLineStart = true;
+
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      if (token.startsWith('//') || token.startsWith('#')) {
+        result += `<span class="hl-comment">${escapeHtml(token)}</span>`;
+        atLineStart = true;
+      } else if (token.startsWith("'") || token.startsWith('"') || token.startsWith('`')) {
+        result += `<span class="hl-string">${escapeHtml(token)}</span>`;
+        atLineStart = false;
+      } else if (/^\d+$/.test(token)) {
+        result += `<span class="hl-number">${token}</span>`;
+        atLineStart = false;
+      } else if (token === '=>') {
+        result += `<span class="hl-keyword">=&gt;</span>`;
+        atLineStart = false;
+      } else if (token === '\n') {
+        result += token;
+        atLineStart = true;
+      } else if (/^[a-zA-Z_$]/.test(token)) {
+        let j = i + 1;
+        while (j < tokens.length && tokens[j] === ' ') j++;
+        const isFollowedByParen = tokens[j] === '(';
+        const isFollowedByColon = tokens[j] === ':';
+
+        if (keywords.has(token)) {
+          result += `<span class="hl-keyword">${token}</span>`;
+        } else if (types.has(token)) {
+          result += `<span class="hl-class">${token}</span>`;
+        } else if (methods.has(token) && isFollowedByParen) {
+          result += `<span class="hl-method">${token}</span>`;
+        } else if (atLineStart && isFollowedByColon) {
+          result += `<span class="hl-property">${escapeHtml(token)}</span>`;
+        } else {
+          result += escapeHtml(token);
+        }
+        atLineStart = false;
+      } else {
+        if (token !== ' ') atLineStart = false;
+        result += escapeHtml(token);
+      }
+    }
+    return result;
+  }
+
+  function escapeHtml(text: string): string {
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   const tabs = $derived([

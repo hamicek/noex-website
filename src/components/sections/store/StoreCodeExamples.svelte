@@ -139,23 +139,52 @@ await store.transaction(async (tx) => {
   };
 
   function highlightCode(code: string): string {
-    return code
-      // Comments first
-      .replace(/(\/\/[^\n]*)/g, '<span class="hl-comment">$1</span>')
-      // Strings
-      .replace(/'([^']*?)'/g, '<span class="hl-string">\'$1\'</span>')
-      // Keywords
-      .replace(/\b(import|from|export|const|let|return|new|await|async|function|class|extends)\b/g, '<span class="hl-keyword">$1</span>')
-      // Classes/Types
-      .replace(/\b(Store|BucketHandle)\b/g, '<span class="hl-class">$1</span>')
-      // Numbers
-      .replace(/\b(\d+)\b/g, '<span class="hl-number">$1</span>')
-      // Methods
-      .replace(/\b(start|defineBucket|bucket|insert|get|update|delete|where|defineQuery|runQuery|subscribe|transaction|count|findOne)\b(?=\s*[\(\<])/g, '<span class="hl-method">$1</span>')
-      // Properties
-      .replace(/\b(key|schema|type|generated|required|format|unique|enum|default|name|email|role|status|balance|id|length)\b(?=\s*[:\.])/g, '<span class="hl-property">$1</span>')
-      // Arrow functions
-      .replace(/=&gt;/g, '<span class="hl-keyword">=&gt;</span>');
+    const keywords = new Set(['import', 'from', 'export', 'const', 'let', 'return', 'new', 'await', 'async', 'function', 'class', 'extends']);
+    const types = new Set(['Store', 'BucketHandle']);
+    const methods = new Set(['start', 'defineBucket', 'bucket', 'insert', 'get', 'update', 'delete', 'where', 'defineQuery', 'runQuery', 'subscribe', 'transaction', 'count', 'findOne']);
+    const properties = new Set(['key', 'schema', 'type', 'generated', 'required', 'format', 'unique', 'enum', 'default', 'name', 'email', 'role', 'status', 'balance', 'id', 'length']);
+
+    const tokenRegex = /\/\/[^\n]*|`[^`]*`|'[^']*'|"[^"]*"|[a-zA-Z_$][\w$]*|\d+|=>|./gs;
+    let result = '';
+    const tokens = code.match(tokenRegex);
+    if (!tokens) return escapeHtml(code);
+
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      if (token.startsWith('//')) {
+        result += `<span class="hl-comment">${escapeHtml(token)}</span>`;
+      } else if (token.startsWith("'") || token.startsWith('"') || token.startsWith('`')) {
+        result += `<span class="hl-string">${escapeHtml(token)}</span>`;
+      } else if (/^\d+$/.test(token)) {
+        result += `<span class="hl-number">${token}</span>`;
+      } else if (token === '=>') {
+        result += `<span class="hl-keyword">=&gt;</span>`;
+      } else if (/^[a-zA-Z_$]/.test(token)) {
+        let j = i + 1;
+        while (j < tokens.length && tokens[j] === ' ') j++;
+        const isFollowedByParen = tokens[j] === '(';
+        const isFollowedByColon = tokens[j] === ':' || tokens[j] === '.';
+
+        if (keywords.has(token)) {
+          result += `<span class="hl-keyword">${token}</span>`;
+        } else if (types.has(token)) {
+          result += `<span class="hl-class">${token}</span>`;
+        } else if (methods.has(token) && isFollowedByParen) {
+          result += `<span class="hl-method">${token}</span>`;
+        } else if (properties.has(token) && isFollowedByColon) {
+          result += `<span class="hl-property">${token}</span>`;
+        } else {
+          result += escapeHtml(token);
+        }
+      } else {
+        result += escapeHtml(token);
+      }
+    }
+    return result;
+  }
+
+  function escapeHtml(text: string): string {
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   const tabs = $derived([

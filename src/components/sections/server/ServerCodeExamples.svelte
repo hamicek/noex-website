@@ -157,26 +157,50 @@ console.log(\`Server listening on port \${server.port}\`);`,
   };
 
   function highlightCode(code: string): string {
-    return code
-      // Comments first
-      .replace(/(\/\/[^\n]*)/g, '<span class="hl-comment">$1</span>')
-      // Strings (double-quoted in JSON)
-      .replace(/"([^"]*?)"/g, '<span class="hl-string">"$1"</span>')
-      // Single-quoted strings (in TypeScript)
-      .replace(/'([^']*?)'/g, '<span class="hl-string">\'$1\'</span>')
-      // Keywords
-      .replace(/\b(import|from|export|const|let|return|new|await|async|function|class|true|false|null)\b/g, '<span class="hl-keyword">$1</span>')
-      // Classes
-      .replace(/\b(NoexServer|Store|RuleEngine)\b/g, '<span class="hl-class">$1</span>')
-      // Numbers
-      .replace(/\b(\d[\d_]*)\b/g, '<span class="hl-number">$1</span>')
-      // Methods
-      .replace(/\b(start|defineBucket|subscribe|unsubscribe)\b(?=\s*[\(\<])/g, '<span class="hl-method">$1</span>')
-      // Template literals
-      .replace(/`([^`]*)`/g, '<span class="hl-string">`$1`</span>')
-      // Arrows
-      .replace(/(\u2192)/g, '<span class="hl-arrow-out">$1</span>')
-      .replace(/(\u2190)/g, '<span class="hl-arrow-in">$1</span>');
+    const keywords = new Set(['import', 'from', 'export', 'const', 'let', 'return', 'new', 'await', 'async', 'function', 'class', 'true', 'false', 'null']);
+    const types = new Set(['NoexServer', 'Store', 'RuleEngine']);
+    const methods = new Set(['start', 'defineBucket', 'subscribe', 'unsubscribe']);
+
+    const tokenRegex = /\/\/[^\n]*|`[^`]*`|'[^']*'|"[^"]*"|[a-zA-Z_$][\w$]*|\d[\d_]*|\u2192|\u2190|./gs;
+    let result = '';
+    const tokens = code.match(tokenRegex);
+    if (!tokens) return escapeHtml(code);
+
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      if (token.startsWith('//')) {
+        result += `<span class="hl-comment">${escapeHtml(token)}</span>`;
+      } else if (token.startsWith("'") || token.startsWith('"') || token.startsWith('`')) {
+        result += `<span class="hl-string">${escapeHtml(token)}</span>`;
+      } else if (/^\d/.test(token)) {
+        result += `<span class="hl-number">${token}</span>`;
+      } else if (token === '\u2192') {
+        result += `<span class="hl-arrow-out">${token}</span>`;
+      } else if (token === '\u2190') {
+        result += `<span class="hl-arrow-in">${token}</span>`;
+      } else if (/^[a-zA-Z_$]/.test(token)) {
+        let j = i + 1;
+        while (j < tokens.length && tokens[j] === ' ') j++;
+        const isFollowedByParen = tokens[j] === '(';
+
+        if (keywords.has(token)) {
+          result += `<span class="hl-keyword">${token}</span>`;
+        } else if (types.has(token)) {
+          result += `<span class="hl-class">${token}</span>`;
+        } else if (methods.has(token) && isFollowedByParen) {
+          result += `<span class="hl-method">${token}</span>`;
+        } else {
+          result += escapeHtml(token);
+        }
+      } else {
+        result += escapeHtml(token);
+      }
+    }
+    return result;
+  }
+
+  function escapeHtml(text: string): string {
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   const tabs = $derived([
